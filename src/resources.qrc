@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/MassCalculator.png</file>
+    </qresource>
+</RCC>
