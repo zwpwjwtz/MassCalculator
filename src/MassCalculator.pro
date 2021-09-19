@@ -29,7 +29,9 @@ SOURCES += \
         mainwindow.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    atom/atomic_weight.h \
+    atom/atomic_abbreviation.h
 
 FORMS += \
         mainwindow.ui
