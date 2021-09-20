@@ -28,21 +28,30 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     calculator/atommass.cpp \
-    calculator/formulamass.cpp \
     calculator/atomname.cpp \
-    calculator/chemicalcomposition.cpp
+    calculator/chemicalcomposition.cpp \
+    calculator/formulagenerator.cpp \
+    calculator/formula.cpp \
+    widget/compositionselector.cpp \
+    widget/compositionselectordelegate.cpp
 
 HEADERS += \
         mainwindow.h \
     atom/atomic_weight.h \
     atom/atomic_abbreviation.h \
     calculator/atommass.h \
-    calculator/formulamass.h \
     calculator/atomname.h \
-    calculator/chemicalcomposition.h
+    calculator/chemicalcomposition.h \
+    calculator/formulagenerator.h \
+    calculator/formulagenerator_p.h \
+    calculator/formula.h \
+    widget/compositionselector.h \
+    calculator/elementrange.h \
+    widget/compositionselectordelegate.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    widget/compositionselector.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

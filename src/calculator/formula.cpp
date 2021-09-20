@@ -1,16 +1,16 @@
-#include "formulamass.h"
+#include <sstream>
+#include "formula.h"
 #include "atomname.h"
 #include "atommass.h"
 #include "chemicalcomposition.h"
 
 
-double FormulaMass::toMass(const std::string& formula, bool* error)
+bool Formula::parse(const std::string& formula)
 {
     char c;
     char* p;
     int atomNumber;
     double atomCount = 0, previousAtomCount;
-    ChemicalComposition composition;
     std::string numberBuffer, reversedNumberBuffer;
     std::string nameBuffer, reversedNameBuffer;
 
@@ -61,9 +61,8 @@ double FormulaMass::toMass(const std::string& formula, bool* error)
             atomNumber = AtomName::numberFromAbbreviation(reversedNameBuffer);
             if (atomNumber > 0)
             {
-                previousAtomCount = composition.countElement(atomNumber);
-                composition.setElement(atomNumber,
-                                       previousAtomCount + atomCount);
+                previousAtomCount = countElement(atomNumber);
+                setElement(atomNumber, previousAtomCount + atomCount);
                 nameBuffer.clear();
                 atomCount = 0;
             }
@@ -79,14 +78,32 @@ double FormulaMass::toMass(const std::string& formula, bool* error)
         // Unparsed characters; ignore them
         errorFlag = true;
     }
+    return !errorFlag;
+}
 
-    if (error != nullptr)
-        *error = errorFlag;
-
+double Formula::toMass() const
+{
     // Sum up the atomic weight
     double mass = 0;
-    auto elementList = composition.allElements();
-    for (auto i=elementList.cbegin(); i!=elementList.cend(); i++)
-        mass += composition.countElement(*i) * AtomMass::monoisotopicMass(*i);
+    for (auto i=elements.cbegin(); i!=elements.cend(); i++)
+        mass += i->second * AtomMass::monoisotopicMass(i->first.first);
     return mass;
+}
+
+double Formula::toMass(const std::string& formula, bool* error)
+{
+    Formula f;
+    if (error == nullptr)
+        f.parse(formula);
+    else
+        *error = !f.parse(formula);
+    return f.toMass();
+}
+
+std::string Formula::toString() const
+{
+    std::ostringstream result;
+    for (auto i=elements.cbegin(); i!=elements.cend(); i++)
+        result << AtomName::abbreviation(i->first.first) << i->second;
+    return result.str();
 }

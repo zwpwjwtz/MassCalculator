@@ -22,9 +22,7 @@ public:
     double countIsotope(int atomNumber, int nominalMass) const;
     void setIsotope(int atomNumber, int nominalMass, double count);
 
-    std::string toFormula() const;
-
-private:
+protected:
     std::map<int, bool> defaultIsotope;
     std::map<std::pair<int, int>, double> elements;
 };

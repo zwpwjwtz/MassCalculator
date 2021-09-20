@@ -124,6 +124,14 @@ const char* const mc_atomname_abbr[MC_ATOMIC_ABBR_MAX + 1] =
     MC_ATOMIC_ABBR_116
 };
 
+std::string AtomName::abbreviation(int atomNumber)
+{
+    if (atomNumber > 0 && atomNumber <= MC_ATOMIC_ABBR_MAX)
+        return mc_atomname_abbr[atomNumber];
+    else
+        return std::string();
+}
+
 int AtomName::numberFromAbbreviation(const std::string& abbr)
 {
     for (int i=1; i<=MC_ATOMIC_ABBR_MAX; i++)

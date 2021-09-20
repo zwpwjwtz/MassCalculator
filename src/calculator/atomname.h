@@ -7,6 +7,7 @@
 class AtomName
 {
 public:
+    static std::string abbreviation(int atomNumber);
     static int numberFromAbbreviation(const std::string& abbr);
 };
 
