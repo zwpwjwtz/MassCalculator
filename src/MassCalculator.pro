@@ -26,12 +26,20 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    calculator/atommass.cpp \
+    calculator/formulamass.cpp \
+    calculator/atomname.cpp \
+    calculator/chemicalcomposition.cpp
 
 HEADERS += \
         mainwindow.h \
     atom/atomic_weight.h \
-    atom/atomic_abbreviation.h
+    atom/atomic_abbreviation.h \
+    calculator/atommass.h \
+    calculator/formulamass.h \
+    calculator/atomname.h \
+    calculator/chemicalcomposition.h
 
 FORMS += \
         mainwindow.ui

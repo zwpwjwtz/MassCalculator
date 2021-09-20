@@ -1,0 +1,25 @@
+#include <list>
+#include <cstring>
+#include "formulatomass.h"
+#include "../atom/atomic_abbreviation.h"
+
+
+double FormulaToMass::toMass(const std::string& formula, bool& error)
+{
+    unsigned long pos = 0;
+    unsigned long length = formula.length();
+    char c;
+    int currentAtomNumber = 0;
+    double mass = 0;
+    std::list<int> atomNumber, atomCount;
+    std::string buffer;
+    while (pos < length)
+    {
+        c = formula.at(pos);
+        if (c >= '0' && c <= '9')
+        {
+            buffer.push_back(c);
+        }
+    }
+    return mass;
+}

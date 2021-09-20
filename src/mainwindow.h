@@ -18,6 +18,11 @@ public:
 protected:
     void changeEvent(QEvent *e);
 
+private slots:
+    void on_textInputFormula_returnPressed();
+
+    void on_tabWidget_currentChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 };

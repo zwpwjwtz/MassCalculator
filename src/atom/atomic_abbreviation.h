@@ -1,6 +1,7 @@
 #ifndef ATOMIC_ABBR_H
 #define ATOMIC_ABBR_H
 
+#define MC_ATOMIC_ABBR_MAX         116
 #define MC_ATOMIC_ABBR_ELECTRON    "e"
 #define MC_ATOMIC_ABBR_1           "H"
 #define MC_ATOMIC_ABBR_2           "He"
