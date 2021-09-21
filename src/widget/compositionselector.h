@@ -25,6 +25,9 @@ public:
     QList<ElementRange> getElementRanges() const;
     void removeElement(int atomNumber);
 
+signals:
+    void finished();
+
 protected:
     void changeEvent(QEvent *e);
     void focusOutEvent(QFocusEvent* e);

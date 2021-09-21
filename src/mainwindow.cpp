@@ -18,6 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     compositionList = new CompositionSelector(ui->tabFormula);
     compositionList->setAutoFillBackground(true);
     compositionList->hide();
+    connect(compositionList, SIGNAL(finished()),
+            this, SLOT(onCompositionSelectorFinished()));
     showAllowedElementRanges();
 }
 
@@ -64,6 +66,12 @@ void MainWindow::showAllowedElementRanges()
                                    QString::number(i->maxCount)));
     }
     ui->textAllowedElement->setText(displayedRanges);
+}
+
+void MainWindow::onCompositionSelectorFinished()
+{
+    compositionList->hide();
+    showAllowedElementRanges();
 }
 
 void MainWindow::on_tabWidget_currentChanged(int index)
@@ -136,10 +144,7 @@ void MainWindow::on_buttonGetFormula_clicked()
 void MainWindow::on_buttonAllowedElement_clicked()
 {
     if (compositionList->isVisible())
-    {
-        compositionList->hide();
-        showAllowedElementRanges();
-    }
+        onCompositionSelectorFinished();
     else
     {
         compositionList->move({ui->textAllowedElement->x(),

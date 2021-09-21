@@ -172,7 +172,7 @@ void FrameFormulaList::on_buttonOpenLink_clicked()
             break;
         }
 
-        recordID = i->siblingAtColumn(0).data().toString();
+        recordID = modelResult->item(i->row(), 0)->text();
         if (!recordID.isEmpty())
         {
             QDesktopServices::openUrl(

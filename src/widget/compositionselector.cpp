@@ -103,12 +103,12 @@ void CompositionSelector::on_buttonRemove_clicked()
 {
     for (int i=modelElement.rowCount() - 1; i>=0; i--)
     {
-        if (ui->viewElement->selectionModel()->isRowSelected(i))
+        if (ui->viewElement->selectionModel()->isRowSelected(i, QModelIndex()))
             modelElement.removeRow(i);
     }
 }
 
 void CompositionSelector::on_buttonOK_clicked()
 {
-    hide();
+    emit finished();
 }

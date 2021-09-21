@@ -29,6 +29,7 @@ private:
     void showAllowedElementRanges();
 
 private slots:
+    void onCompositionSelectorFinished();
     void on_tabWidget_currentChanged(int index);
     void on_textInputFormula_returnPressed();
     void on_textInputMass_returnPressed();
