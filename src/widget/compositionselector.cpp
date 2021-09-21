@@ -43,6 +43,11 @@ void CompositionSelector::changeEvent(QEvent *e)
     }
 }
 
+void CompositionSelector::focusOutEvent(QFocusEvent *e)
+{
+    hide();
+}
+
 void CompositionSelector::addElement(int atomNumber,
                                      int minCount, int maxCount,
                                      bool enable)
@@ -101,4 +106,9 @@ void CompositionSelector::on_buttonRemove_clicked()
         if (ui->viewElement->selectionModel()->isRowSelected(i))
             modelElement.removeRow(i);
     }
+}
+
+void CompositionSelector::on_buttonOK_clicked()
+{
+    hide();
 }

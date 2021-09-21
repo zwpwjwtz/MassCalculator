@@ -33,7 +33,8 @@ SOURCES += \
     calculator/formulagenerator.cpp \
     calculator/formula.cpp \
     widget/compositionselector.cpp \
-    widget/compositionselectordelegate.cpp
+    widget/compositionselectordelegate.cpp \
+    widget/frameformulalist.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -48,11 +49,13 @@ HEADERS += \
     widget/compositionselector.h \
     calculator/elementrange.h \
     widget/compositionselectordelegate.h \
-    atom/atomic_weight_average.h
+    atom/atomic_weight_average.h \
+    widget/frameformulalist.h
 
 FORMS += \
         mainwindow.ui \
-    widget/compositionselector.ui
+    widget/compositionselector.ui \
+    widget/frameformulalist.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

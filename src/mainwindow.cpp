@@ -1,8 +1,10 @@
 #include "QMessageBox"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "calculator/atomname.h"
 #include "calculator/formulagenerator.h"
 #include "widget/compositionselector.h"
+#include "widget/frameformulalist.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -11,20 +13,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    ui->listResultFormula->setModel(&formulaList);
     ui->textInputFormula->setFocus();
-
-    formulaList.setColumnCount(4);
-    formulaList.setHorizontalHeaderLabels({"Formula",
-                                           "Mono.Mass",
-                                           "Difference(Da)",
-                                           "Difference(ppm)"});
-    ui->listResultFormula->horizontalHeader()
-                         ->setSectionResizeMode(QHeaderView::Stretch);
 
     compositionList = new CompositionSelector(ui->tabFormula);
     compositionList->setAutoFillBackground(true);
     compositionList->hide();
+    showAllowedElementRanges();
 }
 
 MainWindow::~MainWindow()
@@ -44,6 +38,21 @@ void MainWindow::changeEvent(QEvent *e)
     }
 }
 
+void MainWindow::showAllowedElementRanges()
+{
+    QString displayedRanges;
+    auto rangeList = compositionList->getElementRanges();
+    for (auto i=rangeList.cbegin(); i!=rangeList.cend(); i++)
+    {
+        displayedRanges.append(
+            QString("%1%2-%3 ").arg(QString::fromStdString(
+                                       AtomName::abbreviation(i->atomNumber)),
+                                   QString::number(i->minCount),
+                                   QString::number(i->maxCount)));
+    }
+    ui->textAllowedElement->setText(displayedRanges);
+}
+
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
     switch (index)
@@ -53,8 +62,6 @@ void MainWindow::on_tabWidget_currentChanged(int index)
             break;
         case 1: // Mass to formula
             ui->textInputMass->setFocus();
-            ui->listResultFormula->horizontalHeader()
-                            ->setSectionResizeMode(QHeaderView::Interactive);
             break;
         default:;
     }
@@ -81,7 +88,7 @@ void MainWindow::on_buttonGetMass_clicked()
         return;
     }
     ui->textResultMass->setText(QString::number(f.toAverageMass()));
-    ui->textResultMonoMass->setText(QString::number(f.toMass()));
+    ui->textResultMonoMass->setText(QString::number(f.toMass(), 'f', 6));
     ui->textResultFormula->setText(QString::fromStdString(f.toString()));
 }
 
@@ -103,34 +110,23 @@ void MainWindow::on_buttonGetFormula_clicked()
         generator.setElement(*i);
 
     auto result = generator.fromMass(mass + toleranceMin, mass + toleranceMax);
-    formulaList.setRowCount(0);
     if (result.size() < 1)
         ui->statusBar->showMessage("No result found.");
     else
     {
-        // Load results
-        double formulaMass;
-        QList<QStandardItem*> newRow;
-        for (auto j=result.cbegin(); j!=result.cend(); j++)
-        {
-            formulaMass = j->toMass();
-            newRow << new QStandardItem(QString::fromStdString(j->toString()))
-                   << new QStandardItem(QString::number(formulaMass))
-                   << new QStandardItem(QString::number(mass - formulaMass))
-                   << new QStandardItem(
-                          QString::number((mass - formulaMass) / mass  * 1E6));
-            formulaList.appendRow(newRow);
-            newRow.clear();
-        }
         ui->statusBar->showMessage(QString("%1 result(s) found.")
                                           .arg(result.size()));
+        ui->frameResultFormula->loadResult(result, mass);
     }
 }
 
 void MainWindow::on_buttonAllowedElement_clicked()
 {
     if (compositionList->isVisible())
+    {
         compositionList->hide();
+        showAllowedElementRanges();
+    }
     else
     {
         compositionList->move({ui->textAllowedElement->x(),

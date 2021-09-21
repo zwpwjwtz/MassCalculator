@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/MassCalculator.png</file>
+        <file>icons/globe.png</file>
+        <file>icons/document-save-as.png</file>
+        <file>icons/edit.png</file>
+        <file>icons/dialog-ok-apply.png</file>
     </qresource>
 </RCC>

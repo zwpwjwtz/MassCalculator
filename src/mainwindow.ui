@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Mass Calculator</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/MassCalculator.png</normaloff>:/icons/MassCalculator.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
@@ -45,6 +49,9 @@
         </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="labelInputFormula">
             <property name="text">
@@ -143,6 +150,9 @@
         </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="labelInputMass">
             <property name="text">
@@ -164,6 +174,9 @@
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="labelAllowedElement">
             <property name="text">
@@ -183,8 +196,9 @@
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
-            <property name="text">
-             <string>v</string>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
             </property>
             <property name="shortcut">
              <string notr="true"/>
@@ -256,7 +270,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableView" name="listResultFormula"/>
+         <widget class="FrameFormulaList" name="frameResultFormula">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -385,6 +406,14 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>FrameFormulaList</class>
+   <extends>QFrame</extends>
+   <header>widget/frameformulalist.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>

@@ -24,8 +24,9 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    QStandardItemModel formulaList;
     CompositionSelector* compositionList;
+
+    void showAllowedElementRanges();
 
 private slots:
     void on_tabWidget_currentChanged(int index);

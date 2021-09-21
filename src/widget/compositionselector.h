@@ -27,6 +27,7 @@ public:
 
 protected:
     void changeEvent(QEvent *e);
+    void focusOutEvent(QFocusEvent* e);
 
 private:
     Ui::CompositionSelector *ui;
@@ -36,6 +37,7 @@ private:
 private slots:
     void on_buttonAdd_clicked();
     void on_buttonRemove_clicked();
+    void on_buttonOK_clicked();
 };
 
 #endif // COMPOSITIONSELECTOR_H
