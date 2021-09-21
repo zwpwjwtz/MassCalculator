@@ -10,6 +10,7 @@ class Formula : public ChemicalComposition
 public:
     bool parse(const std::string& formula);
 
+    double toAverageMass() const;
     double toMass() const;
     static double toMass(const std::string& formula, bool* error = nullptr);
 

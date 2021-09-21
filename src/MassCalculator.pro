@@ -47,7 +47,8 @@ HEADERS += \
     calculator/formula.h \
     widget/compositionselector.h \
     calculator/elementrange.h \
-    widget/compositionselectordelegate.h
+    widget/compositionselectordelegate.h \
+    atom/atomic_weight_average.h
 
 FORMS += \
         mainwindow.ui \

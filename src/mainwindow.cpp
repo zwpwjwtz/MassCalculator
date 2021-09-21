@@ -19,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
                                            "Mono.Mass",
                                            "Difference(Da)",
                                            "Difference(ppm)"});
+    ui->listResultFormula->horizontalHeader()
+                         ->setSectionResizeMode(QHeaderView::Stretch);
 
     compositionList = new CompositionSelector(ui->tabFormula);
     compositionList->setAutoFillBackground(true);
@@ -51,6 +53,8 @@ void MainWindow::on_tabWidget_currentChanged(int index)
             break;
         case 1: // Mass to formula
             ui->textInputMass->setFocus();
+            ui->listResultFormula->horizontalHeader()
+                            ->setSectionResizeMode(QHeaderView::Interactive);
             break;
         default:;
     }
@@ -68,16 +72,18 @@ void MainWindow::on_textInputMass_returnPressed()
 
 void MainWindow::on_buttonGetMass_clicked()
 {
-    bool error;
-    double mass = Formula::toMass(ui->textInputFormula->text().toStdString(),
-                                  &error);
-    if (error)
+    Formula f;
+    bool ok = f.parse(ui->textInputFormula->text().toStdString());
+    if (!ok)
+    {
         QMessageBox::warning(this, "Invalid formula",
                              "The formula that you input is incorrect.");
-    else
-        ui->textResultMonoMass->setText(QString::number(mass));
+        return;
+    }
+    ui->textResultMass->setText(QString::number(f.toAverageMass()));
+    ui->textResultMonoMass->setText(QString::number(f.toMass()));
+    ui->textResultFormula->setText(QString::fromStdString(f.toString()));
 }
-
 
 void MainWindow::on_buttonGetFormula_clicked()
 {
@@ -97,6 +103,7 @@ void MainWindow::on_buttonGetFormula_clicked()
         generator.setElement(*i);
 
     auto result = generator.fromMass(mass + toleranceMin, mass + toleranceMax);
+    formulaList.setRowCount(0);
     if (result.size() < 1)
         ui->statusBar->showMessage("No result found.");
     else
@@ -104,7 +111,6 @@ void MainWindow::on_buttonGetFormula_clicked()
         // Load results
         double formulaMass;
         QList<QStandardItem*> newRow;
-        formulaList.clear();
         for (auto j=result.cbegin(); j!=result.cend(); j++)
         {
             formulaMass = j->toMass();
@@ -112,7 +118,7 @@ void MainWindow::on_buttonGetFormula_clicked()
                    << new QStandardItem(QString::number(formulaMass))
                    << new QStandardItem(QString::number(mass - formulaMass))
                    << new QStandardItem(
-                                  QString::number((mass - formulaMass) * 1E6));
+                          QString::number((mass - formulaMass) / mass  * 1E6));
             formulaList.appendRow(newRow);
             newRow.clear();
         }

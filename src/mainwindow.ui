@@ -33,13 +33,16 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabMass">
        <attribute name="title">
         <string>Get Mass</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>4</number>
+        </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -57,7 +60,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonCalcMass">
+           <widget class="QPushButton" name="buttonGetMass">
             <property name="text">
              <string>⏎</string>
             </property>
@@ -102,6 +105,20 @@
          </layout>
         </item>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Emperical formula:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="textResultFormula"/>
+          </item>
+         </layout>
+        </item>
+        <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -121,6 +138,9 @@
         <string>Get Formula</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>4</number>
+        </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
@@ -160,6 +180,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="buttonAllowedElement">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="text">
              <string>v</string>
             </property>
@@ -213,7 +236,7 @@
              <item>
               <widget class="QRadioButton" name="radioMassToleranceAbsolute">
                <property name="text">
-                <string>Absolute(Da)</string>
+                <string>Abso&amp;lute(Da)</string>
                </property>
                <property name="checked">
                 <bool>true</bool>
@@ -256,7 +279,7 @@
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap>:/icons/MassCalculator.png</pixmap>
+             <pixmap resource="resources.qrc">:/icons/MassCalculator.png</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -362,6 +385,8 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

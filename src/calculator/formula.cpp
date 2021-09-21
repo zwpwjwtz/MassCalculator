@@ -81,6 +81,15 @@ bool Formula::parse(const std::string& formula)
     return !errorFlag;
 }
 
+double Formula::toAverageMass() const
+{
+    // Sum up the averaged atomic weight
+    double mass = 0;
+    for (auto i=elements.cbegin(); i!=elements.cend(); i++)
+        mass += i->second * AtomMass::averageMass(i->first.first);
+    return mass;
+}
+
 double Formula::toMass() const
 {
     // Sum up the atomic weight
@@ -104,6 +113,11 @@ std::string Formula::toString() const
 {
     std::ostringstream result;
     for (auto i=elements.cbegin(); i!=elements.cend(); i++)
-        result << AtomName::abbreviation(i->first.first) << i->second;
+    {
+        if (i->second > 1)
+            result << AtomName::abbreviation(i->first.first) << i->second;
+        else if (i->second == 1)
+            result << AtomName::abbreviation(i->first.first);
+    }
     return result.str();
 }
