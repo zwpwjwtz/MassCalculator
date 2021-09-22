@@ -7,6 +7,8 @@
 #include "frameformulalist.h"
 #include "ui_frameformulalist.h"
 
+#define MC_FORMULA_ELEMENT_ORDER   {"C"}
+
 #define MC_FORMULA_OPENLINK_MAX    10
 
 #define MC_FORMULA_FILE_SUFFIX_ALL "All (*)"
@@ -72,17 +74,22 @@ void FrameFormulaList::loadResult(const std::list<Formula>& formulaList,
 
     double formulaMass, massDiff;
     QList<QStandardItem*> newRow;
+    std::vector<std::string> elementOrder(MC_FORMULA_ELEMENT_ORDER);
     for (auto j=formulaList.cbegin(); j!=formulaList.cend(); j++)
     {
         formulaMass = j->toMass();
-        newRow << new QStandardItem(QString::fromStdString(j->toString()))
+        newRow << new QStandardItem(
+                          QString::fromStdString(j->toString(elementOrder)))
                << new QStandardItem(QString::number(formulaMass, 'f', 6));
+        newRow[1]->setData(formulaMass, Qt::DisplayRole);
         if (expectedMass > 0)
         {
             massDiff = expectedMass - formulaMass;
             newRow << new QStandardItem(QString::number(massDiff))
                    << new QStandardItem(
                               QString::number(massDiff / expectedMass  * 1E6));
+            newRow[2]->setData(massDiff, Qt::DisplayRole);
+            newRow[3]->setData(massDiff / expectedMass  * 1E6, Qt::DisplayRole);
         }
         modelResult->appendRow(newRow);
         newRow.clear();

@@ -15,6 +15,7 @@ public:
     static double toMass(const std::string& formula, bool* error = nullptr);
 
     std::string toString() const;
+    std::string toString(const std::vector<std::string>& elementOrder) const;
 };
 
 #endif // FORMULA_H

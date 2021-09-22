@@ -116,7 +116,43 @@ std::string Formula::toString() const
     {
         if (i->second > 1)
             result << AtomName::abbreviation(i->first.first) << i->second;
-        else if (i->second == 1)
+        else if (i->second == 1.0)
+            result << AtomName::abbreviation(i->first.first);
+    }
+    return result.str();
+}
+
+std::string
+Formula::toString(const std::vector<std::string>& elementOrder) const
+{
+    std::ostringstream result;
+
+    // Output elements with specified (priority) order
+    std::map<std::pair<int, int>, double>::iterator i;
+    std::map<std::pair<int, int>, double> tempElementList(elements);
+    for (auto j=elementOrder.cbegin(); j!= elementOrder.cend(); j++)
+    {
+        for (i=tempElementList.begin(); i!=tempElementList.end(); i++)
+        {
+            if (*j == AtomName::abbreviation(i->first.first))
+                break;
+        }
+        if (i != tempElementList.end())
+        {
+            if (i->second > 1)
+                result << AtomName::abbreviation(i->first.first) << i->second;
+            else if (i->second == 1.0)
+                result << AtomName::abbreviation(i->first.first);
+            tempElementList.erase(i);
+        }
+    }
+
+    // Output the rest elements
+    for (i=tempElementList.begin(); i!=tempElementList.cend(); i++)
+    {
+        if (i->second > 1)
+            result << AtomName::abbreviation(i->first.first) << i->second;
+        else if (i->second == 1.0)
             result << AtomName::abbreviation(i->first.first);
     }
     return result.str();

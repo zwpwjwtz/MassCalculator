@@ -6,6 +6,8 @@
 #include "widget/compositionselector.h"
 #include "widget/frameformulalist.h"
 
+#define MC_FORMULA_ELEMENT_ORDER   {"C"}
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -110,7 +112,8 @@ void MainWindow::on_buttonGetMass_clicked()
     }
     ui->textResultMass->setText(QString::number(f.toAverageMass()));
     ui->textResultMonoMass->setText(QString::number(f.toMass(), 'f', 6));
-    ui->textResultFormula->setText(QString::fromStdString(f.toString()));
+    ui->textResultFormula->setText(
+                QString::fromStdString(f.toString(MC_FORMULA_ELEMENT_ORDER)));
 }
 
 void MainWindow::on_buttonGetFormula_clicked()
