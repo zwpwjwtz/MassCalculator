@@ -55,6 +55,13 @@ void MainWindow::changeEvent(QEvent *e)
                    "for more details.\n"));
 }
 
+void MainWindow::resizeEvent(QResizeEvent* e)
+{
+    compositionList->resize(ui->textAllowedElement->width() +
+                            ui->buttonAllowedElement->width(),
+                            compositionList->height());
+}
+
 void MainWindow::showAllowedElementRanges()
 {
     QString displayedRanges;
@@ -153,8 +160,7 @@ void MainWindow::on_buttonAllowedElement_clicked()
         compositionList->move({ui->textAllowedElement->x(),
                                ui->textAllowedElement->y() +
                                ui->textAllowedElement->height()});
-        compositionList->resize(ui->textAllowedElement->width(),
-                                compositionList->height());
+        resizeEvent(nullptr);
         compositionList->show();
     }
 }

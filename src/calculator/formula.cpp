@@ -67,6 +67,10 @@ bool Formula::parse(const std::string& formula)
                 atomCount = 0;
             }
         }
+        else if (c >= '\0' && c <= ' ')
+        {
+            // Blank or control character; ignore it and continue
+        }
         else
         {
             // Invalid character; ignore it and continue

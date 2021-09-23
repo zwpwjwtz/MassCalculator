@@ -68,8 +68,12 @@
           </item>
           <item>
            <widget class="QPushButton" name="buttonGetMass">
-            <property name="text">
-             <string>⏎</string>
+            <property name="toolTip">
+             <string>Calculate the molecular weight of input formula</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/return.png</normaloff>:/icons/return.png</iconset>
             </property>
            </widget>
           </item>
@@ -165,8 +169,12 @@
           </item>
           <item>
            <widget class="QPushButton" name="buttonGetFormula">
-            <property name="text">
-             <string>⏎</string>
+            <property name="toolTip">
+             <string>Look for formulae that have the input mass with given criteria</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/return.png</normaloff>:/icons/return.png</iconset>
             </property>
            </widget>
           </item>
@@ -180,7 +188,7 @@
           <item>
            <widget class="QLabel" name="labelAllowedElement">
             <property name="text">
-             <string>Allowed element:</string>
+             <string>Allowed elements:</string>
             </property>
            </widget>
           </item>
@@ -195,6 +203,9 @@
            <widget class="QPushButton" name="buttonAllowedElement">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="toolTip">
+             <string>Select elements that are possible in the candidate formula</string>
             </property>
             <property name="icon">
              <iconset resource="resources.qrc">
@@ -224,6 +235,9 @@
              </item>
              <item>
               <widget class="QLineEdit" name="textMassToleranceLeft">
+               <property name="toolTip">
+                <string>The lower (left) limit of the allowed mass difference between input mass and mass of candidate formulae</string>
+               </property>
                <property name="text">
                 <string notr="true">-0.05</string>
                </property>
@@ -238,6 +252,9 @@
              </item>
              <item>
               <widget class="QLineEdit" name="textMassToleranceRight">
+               <property name="toolTip">
+                <string>The upper (right) limit of the allowed mass difference between input mass and mass of candidate formulae</string>
+               </property>
                <property name="text">
                 <string notr="true">0.05</string>
                </property>
@@ -271,6 +288,12 @@
         </item>
         <item>
          <widget class="FrameFormulaList" name="frameResultFormula">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -386,7 +409,7 @@
             <item>
              <widget class="QLabel" name="labelSuggestionWelcomed">
               <property name="text">
-               <string>Bug reports and suggestions are welcom!</string>
+               <string>Bug reports and suggestions are welcome!</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
