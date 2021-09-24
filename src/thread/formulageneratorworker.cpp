@@ -1,39 +1,39 @@
 #include "formulageneratorworker.h"
-#include "formulageneratorworker_p.h"
+#include "../calculator/formulagenerator.h"
 
 
 FormulaGeneratorWorker::FormulaGeneratorWorker(QObject* parent)
     : QThread(parent)
 {
-    d_ptr = new FormulaGeneratorWorkerPrivate();
+    generator = new FormulaGenerator();
 }
 
 FormulaGeneratorWorker::~FormulaGeneratorWorker()
 {
-    delete d_ptr;
+    delete generator;
 }
 
 void FormulaGeneratorWorker::setElementRanges(
                                         const std::vector<ElementRange>& ranges)
 {
-    d_ptr->generator.clearElements();
+    generator->clearElements();
     for (auto i=ranges.cbegin(); i!=ranges.cend(); i++)
-        d_ptr->generator.setElement(*i);
+        generator->setElement(*i);
 }
 
 void FormulaGeneratorWorker::setMass(double minMass, double maxMass)
 {
-    d_ptr->minMass = minMass;
-    d_ptr->maxMass = maxMass;
+    this->minMass = minMass;
+    this->maxMass = maxMass;
 }
 
 void FormulaGeneratorWorker::run()
 {
-    d_ptr->result = d_ptr->generator.fromMass(d_ptr->minMass, d_ptr->maxMass);
+    resultList = generator->fromMass(minMass, maxMass);
     emit finished();
 }
 
-std::list<Formula> FormulaGeneratorWorker::result()
+const std::list<Formula>& FormulaGeneratorWorker::result()
 {
-    return d_ptr->result;
+    return resultList;
 }

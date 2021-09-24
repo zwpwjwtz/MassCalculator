@@ -37,7 +37,8 @@ SOURCES += \
     widget/compositionselector.cpp \
     widget/compositionselectordelegate.cpp \
     widget/frameformulalist.cpp \
-    thread/formulageneratorworker.cpp
+    thread/formulageneratorworker.cpp \
+    thread/formulageneratorbatchworker.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -55,7 +56,7 @@ HEADERS += \
     atom/atomic_weight_average.h \
     widget/frameformulalist.h \
     thread/formulageneratorworker.h \
-    thread/formulageneratorworker_p.h
+    thread/formulageneratorbatchworker.h
 
 FORMS += \
         mainwindow.ui \

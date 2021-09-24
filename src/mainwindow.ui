@@ -178,6 +178,17 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="buttonImportMassFromFile">
+            <property name="toolTip">
+             <string>Import a list of mass from file</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/document-open.png</normaloff>:/icons/document-open.png</iconset>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>

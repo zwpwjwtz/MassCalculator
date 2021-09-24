@@ -6,7 +6,7 @@
 #include "../calculator/formula.h"
 
 
-class FormulaGeneratorWorkerPrivate;
+class FormulaGenerator;
 
 class FormulaGeneratorWorker : public QThread
 {
@@ -20,13 +20,15 @@ public:
 
     void run();
 
-    std::list<Formula> result();
+    const std::list<Formula>& result();
 
 signals:
     void finished();
 
 protected:
-    FormulaGeneratorWorkerPrivate* d_ptr;
+    double minMass, maxMass;
+    FormulaGenerator* generator;
+    std::list<Formula> resultList;
 };
 
 #endif // FORMULAGENERATORWORKER_H
