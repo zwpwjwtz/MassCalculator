@@ -6,6 +6,8 @@
 
 
 class CompositionSelector;
+class FormulaGeneratorWorker;
+class QProgressBar;
 
 namespace Ui {
 class MainWindow;
@@ -25,12 +27,17 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    double lastSearchedMass;
+    QProgressBar* progressBar;
     CompositionSelector* compositionList;
+    FormulaGeneratorWorker* formulaGenerator;
 
     void showAllowedElementRanges();
 
 private slots:
     void onCompositionSelectorFinished();
+    void onFormulaGeneratorFinished();
+
     void on_tabWidget_currentChanged(int index);
     void on_textInputFormula_returnPressed();
     void on_textInputMass_returnPressed();

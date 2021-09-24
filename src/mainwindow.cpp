@@ -1,8 +1,9 @@
 #include "QMessageBox"
+#include "QProgressBar"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "calculator/atomname.h"
-#include "calculator/formulagenerator.h"
+#include "thread/formulageneratorworker.h"
 #include "widget/compositionselector.h"
 #include "widget/frameformulalist.h"
 
@@ -13,15 +14,23 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
     ui->textInputFormula->setFocus();
+    progressBar = new QProgressBar(this);
+    progressBar->setValue(0);
+    progressBar->setVisible(false);
+    ui->statusBar->addPermanentWidget(progressBar);
 
     compositionList = new CompositionSelector(ui->tabFormula);
     compositionList->setAutoFillBackground(true);
     compositionList->hide();
     connect(compositionList, SIGNAL(finished()),
             this, SLOT(onCompositionSelectorFinished()));
+
+    formulaGenerator = new FormulaGeneratorWorker(this);
+    connect(formulaGenerator, SIGNAL(finished()),
+            this, SLOT(onFormulaGeneratorFinished()));
+
     showAllowedElementRanges();
 }
 
@@ -83,6 +92,28 @@ void MainWindow::onCompositionSelectorFinished()
     showAllowedElementRanges();
 }
 
+void MainWindow::onFormulaGeneratorFinished()
+{
+    auto result = formulaGenerator->result();
+    if (result.size() < 1)
+    {
+        ui->statusBar->showMessage("No result found.");
+        ui->frameResultFormula->clear();
+    }
+    else
+    {
+        ui->statusBar->showMessage(QString("Loading %1 results, "
+                                           "please wait...")
+                                          .arg(result.size()));
+        QCoreApplication::processEvents();
+        ui->frameResultFormula->loadResult(result, lastSearchedMass);
+        ui->statusBar->showMessage(QString("%1 result(s) found.")
+                                          .arg(result.size()));
+    }
+    ui->buttonGetFormula->setEnabled(true);
+    progressBar->hide();
+}
+
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
     switch (index)
@@ -125,9 +156,24 @@ void MainWindow::on_buttonGetMass_clicked()
 
 void MainWindow::on_buttonGetFormula_clicked()
 {
-    FormulaGenerator generator;
+    if (formulaGenerator->isRunning())
+    {
+        QMessageBox::information(this, "Ongoing calculation",
+                                 "A calculation task is still being processed.\n"
+                                 "Please wait it to be finished "
+                                 "before launch a new one.");
+            return;
+    }
 
     double mass = ui->textInputMass->text().toDouble();
+    if (mass <= 0)
+    {
+        QMessageBox::warning(this, "Non-positive mass provided",
+                             "The mass should be greater than 0");
+        return;
+    }
+    lastSearchedMass = mass;
+
     double toleranceMin = ui->textMassToleranceLeft->text().toDouble();
     double toleranceMax = ui->textMassToleranceRight->text().toDouble();
     if (ui->radioMassToleranceRelative->isChecked())
@@ -137,18 +183,23 @@ void MainWindow::on_buttonGetFormula_clicked()
     }
 
     auto elementRanges = compositionList->getElementRanges();
-    for (auto i=elementRanges.cbegin(); i!=elementRanges.cend(); i++)
-        generator.setElement(*i);
-
-    auto result = generator.fromMass(mass + toleranceMin, mass + toleranceMax);
-    if (result.size() < 1)
-        ui->statusBar->showMessage("No result found.");
-    else
+    if (elementRanges.isEmpty())
     {
-        ui->statusBar->showMessage(QString("%1 result(s) found.")
-                                          .arg(result.size()));
-        ui->frameResultFormula->loadResult(result, mass);
+        QMessageBox::warning(this, "No element specified",
+                             "Please select at least one element before "
+                             "calculating the possible formula.");
+        return;
     }
+
+    ui->statusBar->showMessage("Calculating formulae...");
+    ui->buttonGetFormula->setEnabled(false);
+    progressBar->setRange(0, 0);
+    progressBar->show();
+
+    formulaGenerator->setElementRanges({elementRanges.cbegin(),
+                                        elementRanges.cend()});
+    formulaGenerator->setMass(mass + toleranceMin, mass + toleranceMax);
+    formulaGenerator->start();
 }
 
 void MainWindow::on_buttonAllowedElement_clicked()
