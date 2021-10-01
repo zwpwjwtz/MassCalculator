@@ -60,13 +60,13 @@ void FormulaGeneratorBatchWorker::setTolerance(double min, double max,
 void FormulaGeneratorBatchWorker::run()
 {
     QFile input(this->inputFilename);
-    if (!input.open(QFile::ReadOnly))
+    if (!input.open(QFile::ReadOnly | QFile::Text))
     {
         emit finished(false);
         return;
     }
     QFile output(this->outputFilename);
-    if (!output.open(QFile::WriteOnly))
+    if (!output.open(QFile::WriteOnly | QFile::Text))
     {
         emit finished(false);
         return;
@@ -108,8 +108,8 @@ void FormulaGeneratorBatchWorker::run()
         // Calculate
         if (relativeTolerance)
         {
-            minMass = mass + mass * minTolerance;
-            maxMass = mass + mass * maxTolerance;
+            minMass = mass + mass * minTolerance * 1E-6;
+            maxMass = mass + mass * maxTolerance * 1E-6;
         }
         else
         {

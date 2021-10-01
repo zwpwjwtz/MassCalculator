@@ -11,6 +11,7 @@ public:
     ChemicalComposition();
 
     void clear();
+    bool isEmpty() const;
 
     std::vector<int> allElements() const;
     void clearElement(int atomNumber);
@@ -21,6 +22,9 @@ public:
     void clearIsotope(int atomNumber, int nominalMass);
     double countIsotope(int atomNumber, int nominalMass) const;
     void setIsotope(int atomNumber, int nominalMass, double count);
+
+    ChemicalComposition operator+(const ChemicalComposition& arg) const;
+    ChemicalComposition operator-(const ChemicalComposition& arg) const;
 
 protected:
     std::map<int, bool> defaultIsotope;

@@ -38,7 +38,9 @@ SOURCES += \
     widget/compositionselectordelegate.cpp \
     widget/frameformulalist.cpp \
     thread/formulageneratorworker.cpp \
-    thread/formulageneratorbatchworker.cpp
+    thread/formulageneratorbatchworker.cpp \
+    widget/frameformulamodification.cpp \
+    calculator/formula_adduct.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -56,12 +58,15 @@ HEADERS += \
     atom/atomic_weight_average.h \
     widget/frameformulalist.h \
     thread/formulageneratorworker.h \
-    thread/formulageneratorbatchworker.h
+    thread/formulageneratorbatchworker.h \
+    widget/frameformulamodification.h \
+    calculator/formula_adduct.h
 
 FORMS += \
         mainwindow.ui \
     widget/compositionselector.ui \
-    widget/frameformulalist.ui
+    widget/frameformulalist.ui \
+    widget/frameformulamodification.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

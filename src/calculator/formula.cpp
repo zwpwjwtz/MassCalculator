@@ -5,6 +5,13 @@
 #include "chemicalcomposition.h"
 
 
+Formula::Formula()
+{}
+
+Formula::Formula(const ChemicalComposition& composition)
+    : ChemicalComposition (composition)
+{}
+
 bool Formula::parse(const std::string& formula)
 {
     char c;

@@ -8,6 +8,9 @@
 class Formula : public ChemicalComposition
 {
 public:
+    Formula();
+    Formula(const ChemicalComposition& composition);
+
     bool parse(const std::string& formula);
 
     double toAverageMass() const;

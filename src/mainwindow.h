@@ -55,6 +55,7 @@ private slots:
     void on_buttonGetFormula_clicked();
     void on_buttonAllowedElement_clicked();
     void on_buttonImportMassFromFile_clicked();
+    void on_buttonModification_clicked();
 };
 
 #endif // MAINWINDOW_H

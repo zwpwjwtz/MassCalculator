@@ -5,6 +5,7 @@
 class AtomMass
 {
 public:
+    static double electronMass();
     static double monoisotopicMass(int atomNumber);
     static double averageMass(int atomNumber);
 };

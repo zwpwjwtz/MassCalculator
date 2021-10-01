@@ -67,6 +67,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="buttonModification">
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="buttonGetMass">
             <property name="toolTip">
              <string>Calculate the molecular weight of input formula</string>
@@ -78,6 +85,16 @@
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="FrameFormulaModification" name="frameModification">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -449,6 +466,12 @@
    <class>FrameFormulaList</class>
    <extends>QFrame</extends>
    <header>widget/frameformulalist.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FrameFormulaModification</class>
+   <extends>QFrame</extends>
+   <header>widget/frameformulamodification.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

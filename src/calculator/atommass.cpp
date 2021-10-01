@@ -245,6 +245,11 @@ const double mc_atommass_average[MC_ATOMIC_WEIGHT_AVG_MAX + 1] =
     MC_ATOMIC_WEIGHT_AVG_116
 };
 
+double AtomMass::electronMass()
+{
+    return  MC_ATOMIC_WEIGHT_ELECTRON;
+}
+
 double AtomMass::monoisotopicMass(int atomNumber)
 {
     if (atomNumber > 0 && atomNumber <= MC_ATOMIC_WEIGHT_MAX)

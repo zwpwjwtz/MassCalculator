@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "calculator/atomname.h"
+#include "calculator/atommass.h"
 #include "thread/formulageneratorworker.h"
 #include "thread/formulageneratorbatchworker.h"
 #include "widget/compositionselector.h"
@@ -26,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->textInputFormula->setFocus();
+    ui->frameModification->hide();
 
     labelFileLink = new QLabel(this);
     labelFileLink->setVisible(false);
@@ -91,6 +93,7 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::resizeEvent(QResizeEvent* e)
 {
+    Q_UNUSED(e)
     compositionList->resize(ui->textAllowedElement->width() +
                             ui->buttonAllowedElement->width(),
                             compositionList->height());
@@ -217,8 +220,22 @@ void MainWindow::on_buttonGetMass_clicked()
                              "The formula that you input is incorrect.");
         return;
     }
-    ui->textResultMass->setText(QString::number(f.toAverageMass()));
-    ui->textResultMonoMass->setText(QString::number(f.toMass(), 'f', 6));
+    f = f + ui->frameModification->modification();
+
+    int charge = abs(ui->frameModification->charge());
+    if (charge == 0)
+    {
+        ui->textResultMass->setText(QString::number(f.toAverageMass()));
+        ui->textResultMonoMass->setText(QString::number(f.toMass()));
+    }
+    else
+    {
+        ui->textResultMass->setText("(N/A)");
+        ui->textResultMonoMass->setText(
+                           QString::number(f.toMass() / charge +
+                                           AtomMass::electronMass(),
+                                           'f', 6));
+    }
     ui->textResultFormula->setText(
                 QString::fromStdString(f.toString(MC_FORMULA_ELEMENT_ORDER)));
 }
@@ -335,4 +352,9 @@ void MainWindow::on_buttonImportMassFromFile_clicked()
                                  ui->textMassToleranceRight->text().toDouble(),
                                  ui->radioMassToleranceRelative->isChecked());
     formulaFactory->start();
+}
+
+void MainWindow::on_buttonModification_clicked()
+{
+    ui->frameModification->setVisible(!ui->frameModification->isVisible());
 }

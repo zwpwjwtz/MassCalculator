@@ -7,6 +7,12 @@ ChemicalComposition::ChemicalComposition()
 void ChemicalComposition::clear()
 {
     elements.clear();
+    defaultIsotope.clear();
+}
+
+bool ChemicalComposition::isEmpty() const
+{
+    return elements.size() == 0;
 }
 
 std::vector<int> ChemicalComposition::allElements() const
@@ -150,4 +156,54 @@ void ChemicalComposition::setIsotope(int atomNumber,
             i->second = count;
         }
     }
+}
+
+ChemicalComposition
+ChemicalComposition::operator+(const ChemicalComposition& arg) const
+{
+    ChemicalComposition result(*this);
+    std::map<std::pair<int, int>, double>::const_iterator i;
+    std::map<std::pair<int, int>, double>::iterator j;
+    for (i=arg.elements.cbegin(); i!=arg.elements.cend(); i++)
+    {
+        for (j=result.elements.begin(); j!=result.elements.end(); j++)
+        {
+            if (i->first.first == j->first.first &&
+                i->first.second == j->first.second)
+            {
+                j->second += i->second;
+                if (j->second == 0)
+                    result.clearIsotope(j->first.first, j->first.second);
+                break;
+            }
+        }
+        if (j == result.elements.end())
+            result.elements.insert(*i);
+    }
+    return result;
+}
+
+ChemicalComposition
+ChemicalComposition::operator-(const ChemicalComposition& arg) const
+{
+    ChemicalComposition result(*this);
+    std::map<std::pair<int, int>, double>::const_iterator i;
+    std::map<std::pair<int, int>, double>::iterator j;
+    for (i=arg.elements.cbegin(); i!=arg.elements.cend(); i++)
+    {
+        for (j=result.elements.begin(); j!=result.elements.end(); j++)
+        {
+            if (i->first.first == j->first.first &&
+                i->first.second == j->first.second)
+            {
+                j->second -= i->second;
+                if (j->second == 0)
+                    result.clearIsotope(j->first.first, j->first.second);
+                break;
+            }
+        }
+        if (j == result.elements.end())
+            result.elements.insert(*i);
+    }
+    return result;
 }
