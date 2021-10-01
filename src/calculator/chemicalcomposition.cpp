@@ -158,6 +158,16 @@ void ChemicalComposition::setIsotope(int atomNumber,
     }
 }
 
+bool ChemicalComposition::operator==(const ChemicalComposition& arg) const
+{
+    return this->elements == arg.elements;
+}
+
+bool ChemicalComposition::operator!=(const ChemicalComposition& arg) const
+{
+    return this->elements != arg.elements;
+}
+
 ChemicalComposition
 ChemicalComposition::operator+(const ChemicalComposition& arg) const
 {

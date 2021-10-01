@@ -40,7 +40,8 @@ SOURCES += \
     thread/formulageneratorworker.cpp \
     thread/formulageneratorbatchworker.cpp \
     widget/frameformulamodification.cpp \
-    calculator/formula_adduct.cpp
+    calculator/formula_adduct.cpp \
+    config.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -60,7 +61,9 @@ HEADERS += \
     thread/formulageneratorworker.h \
     thread/formulageneratorbatchworker.h \
     widget/frameformulamodification.h \
-    calculator/formula_adduct.h
+    calculator/formula_adduct.h \
+    global.h \
+    config.h
 
 FORMS += \
         mainwindow.ui \

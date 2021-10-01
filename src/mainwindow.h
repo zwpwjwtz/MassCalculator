@@ -29,6 +29,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+
     double lastSearchedMass;
     QString lastImportFilePath, lastExportFilePath;
     QString lastImportFileFilter, lastExportFileFilter;
@@ -37,6 +38,9 @@ private:
     CompositionSelector* compositionList;
     FormulaGeneratorWorker* formulaGenerator;
     FormulaGeneratorBatchWorker* formulaFactory;
+
+    void loadPreferences();
+    void savePreferences();
 
     void showAllowedElementRanges();
     void setInputWidgetEnabled(int pageIndex, bool enabled = true);

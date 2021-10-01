@@ -67,6 +67,11 @@ void CompositionSelector::addElement(int atomNumber,
     modelElement.appendRow(newRow);
 }
 
+void CompositionSelector::clear()
+{
+    modelElement.setRowCount(0);
+}
+
 QList<ElementRange> CompositionSelector::getElementRanges() const
 {
     ElementRange range;

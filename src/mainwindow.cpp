@@ -1,9 +1,11 @@
 #include <QDesktopServices>
-#include "QFileDialog"
-#include "QMessageBox"
-#include "QProgressBar"
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QProgressBar>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "global.h"
+#include "config.h"
 #include "calculator/atomname.h"
 #include "calculator/atommass.h"
 #include "thread/formulageneratorworker.h"
@@ -58,11 +60,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(formulaFactory, SIGNAL(progressed(double)),
             this, SLOT(onFormulaFactoryProgressed(double)));
 
+    loadPreferences();
     showAllowedElementRanges();
 }
 
 MainWindow::~MainWindow()
 {
+    savePreferences();
     delete ui;
 }
 
@@ -97,6 +101,32 @@ void MainWindow::resizeEvent(QResizeEvent* e)
     compositionList->resize(ui->textAllowedElement->width() +
                             ui->buttonAllowedElement->width(),
                             compositionList->height());
+}
+
+void MainWindow::loadPreferences()
+{
+    ui->frameModification->setCharge(appConfig.formulaCharge());
+    appConfig.loadFormulaModification(*ui->frameModification);
+
+    MassTolerance tolerance(appConfig.massTolerance());
+    if (tolerance.min != 0 || tolerance.max != 0)
+    {
+        ui->textMassToleranceLeft->setText(QString::number(tolerance.min));
+        ui->textMassToleranceRight->setText(QString::number(tolerance.max));
+    }
+    ui->radioMassToleranceRelative->setChecked(tolerance.relative);
+    appConfig.loadCompositionSelector(*compositionList);
+}
+
+void MainWindow::savePreferences()
+{
+    appConfig.setFormulaCharge(ui->frameModification->charge());
+    appConfig.saveFormulaModification(*ui->frameModification);
+
+    appConfig.setMassTolerance({ui->textMassToleranceLeft->text().toDouble(),
+                                ui->textMassToleranceRight->text().toDouble(),
+                                ui->radioMassToleranceRelative->isChecked()});
+    appConfig.saveCompositionSelector(*compositionList);
 }
 
 void MainWindow::showAllowedElementRanges()

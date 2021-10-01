@@ -18,7 +18,10 @@ public:
     ~FrameFormulaModification();
 
     int charge() const;
+    void setCharge(int charge);
     Formula modification() const;
+    void setModification(const Formula& formula,
+                         const QString& text = QString());
 
 protected:
     void changeEvent(QEvent *e);

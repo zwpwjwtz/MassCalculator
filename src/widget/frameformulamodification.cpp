@@ -34,6 +34,11 @@ int FrameFormulaModification::charge() const
     return ui->spinCharge->value();
 }
 
+void FrameFormulaModification::setCharge(int charge)
+{
+    ui->spinCharge->setValue(charge);
+}
+
 Formula FrameFormulaModification::modification() const
 {
     int index = ui->comboAdduct->currentIndex();
@@ -41,6 +46,25 @@ Formula FrameFormulaModification::modification() const
         return formulaList[index];
     else
         return Formula();
+}
+
+void FrameFormulaModification::setModification(const Formula& formula,
+                                               const QString& text)
+{
+    int i;
+    for (i=0; i<formulaList.count(); i++)
+    {
+        if (formulaList[i] == formula)
+            break;
+    }
+    if (i == formulaList.count())
+    {
+        // No matched modification; add a new entry for it
+        formulaList.push_back(formula);
+        ui->comboAdduct->addItem(text);
+    }
+    else
+        ui->comboAdduct->setCurrentIndex(i);
 }
 
 void FrameFormulaModification::loadDefaultModification()

@@ -23,6 +23,8 @@ public:
     double countIsotope(int atomNumber, int nominalMass) const;
     void setIsotope(int atomNumber, int nominalMass, double count);
 
+    bool operator==(const ChemicalComposition& arg) const;
+    bool operator!=(const ChemicalComposition& arg) const;
     ChemicalComposition operator+(const ChemicalComposition& arg) const;
     ChemicalComposition operator-(const ChemicalComposition& arg) const;
 

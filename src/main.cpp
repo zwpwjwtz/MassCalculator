@@ -1,5 +1,10 @@
-#include "mainwindow.h"
 #include <QApplication>
+#include "global.h"
+#include "config.h"
+#include "mainwindow.h"
+
+
+Config appConfig;
 
 int main(int argc, char *argv[])
 {
