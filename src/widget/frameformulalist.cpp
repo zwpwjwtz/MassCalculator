@@ -125,10 +125,10 @@ void FrameFormulaList::restoreColumnWidth()
 void FrameFormulaList::setColumnHeader(int columnCount)
 {
     modelResult->setColumnCount(columnCount);
-    modelResult->setHorizontalHeaderLabels({"Formula",
-                                           "Mono.Mass",
-                                           "Difference(Da)",
-                                           "Difference(ppm)"});
+    modelResult->setHorizontalHeaderLabels({tr("Formula"),
+                                            tr("Mono.Mass"),
+                                            tr("Difference(Da)"),
+                                            tr("Difference(ppm)")});
     ui->viewSearchResult->horizontalHeader()
                         ->setSectionResizeMode(QHeaderView::Interactive);
 }
@@ -170,10 +170,10 @@ void FrameFormulaList::on_buttonOpenLink_clicked()
     {
         if (i - selectedIndexes.begin() + 1 > MC_FORMULA_OPENLINK_MAX)
         {
-            QMessageBox::warning(this, "Too many records selected",
-                                 QString("You have selected %1 records.\n"
-                                         "Only links to the first %2 records "
-                                         "will be opened.")
+            QMessageBox::warning(this, tr("Too many records selected"),
+                                 QString(tr("You have selected %1 records.\n"
+                                            "Only links to the first %2 records"
+                                            " will be opened."))
                                         .arg(selectedIndexes.count())
                                         .arg(MC_FORMULA_OPENLINK_MAX));
             break;
@@ -197,7 +197,8 @@ void FrameFormulaList::on_buttonSave_clicked()
     if (lastSavePathFilter.isEmpty())
         lastSavePathFilter = MC_FORMULA_FILE_SUFFIX_CSV;
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    "Save query result as CSV",
+                                                    tr("Save query result "
+                                                       "as CSV file"),
                                                     lastSavePath,
                                                     filter,
                                                     &lastSavePathFilter);
@@ -207,8 +208,8 @@ void FrameFormulaList::on_buttonSave_clicked()
     QFile f(fileName);
     if (!f.open(QFile::WriteOnly))
     {
-        QMessageBox::critical(this, "Failed writing to file",
-                              QString("Failed opening file %1 to write.")
+        QMessageBox::critical(this, tr("Failed writing to file"),
+                              QString(tr("Failed opening file %1 to write."))
                                      .arg(fileName));
         return;
     }

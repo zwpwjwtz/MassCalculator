@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>translation/MassCalculator_zh_CN.qm</file>
+    </qresource>
+</RCC>

@@ -65,12 +65,15 @@
           <item>
            <widget class="LabeledText" name="textInputFormula">
             <property name="placeholderText">
-             <string>C6H12O6</string>
+             <string notr="true">C6H12O6</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="buttonModification">
+            <property name="toolTip">
+             <string>Set modification</string>
+            </property>
             <property name="text">
              <string>...</string>
             </property>
@@ -288,6 +291,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="buttonShowMassModification">
+            <property name="toolTip">
+             <string>Set modification</string>
+            </property>
             <property name="text">
              <string>e-</string>
             </property>

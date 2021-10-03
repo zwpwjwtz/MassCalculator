@@ -79,4 +79,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resources.qrc
+    resources.qrc \
+    translations.qrc \
+    translations.qrc
+
+TRANSLATIONS += \
+    translation/MassCalculator_zh_CN.ts
+
+include(translation.pri)

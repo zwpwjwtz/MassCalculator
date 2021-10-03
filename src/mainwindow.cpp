@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
     labelFileLink = new QLabel(this);
     labelFileLink->setVisible(false);
     labelFileLink->setTextFormat(Qt::TextFormat::RichText);
-    labelFileLink->setText("Open the <a href=\"#\">result</a>&nbsp;&nbsp;");
+    labelFileLink->setText(tr("Open the <a href=\"#\">result</a>&nbsp;&nbsp;"));
     ui->statusBar->addPermanentWidget(labelFileLink);
     connect(labelFileLink, SIGNAL(linkActivated(const QString&)),
             this, SLOT(onLabelFileLinkClicked()));
@@ -102,7 +102,7 @@ void MainWindow::changeEvent(QEvent *e)
                 tr("MassCalculator - A simple tool for calculating molecular weight.\n\n"
                    "This program is a free software.\n\n"
                    "You can redistribute it and/or modify it under the terms of "
-                   "the GNU Library General Public License as published by "
+                   "the GNU General Public License as published by "
                    "the Free Software Foundation; either version 3 of the License, "
                    "or (at your option) any later version.\n\n"
                    "This program is distributed in the hope that it will be useful, but WITHOUT "
@@ -253,17 +253,17 @@ void MainWindow::onFormulaGeneratorFinished()
     auto result = formulaGenerator->result();
     if (result.size() < 1)
     {
-        ui->statusBar->showMessage("No result found.");
+        ui->statusBar->showMessage(tr("No result found."));
         ui->frameResultFormula->clear();
     }
     else
     {
-        ui->statusBar->showMessage(QString("Loading %1 results, "
-                                           "please wait...")
+        ui->statusBar->showMessage(QString(tr("Loading %1 results, "
+                                              "please wait..."))
                                           .arg(result.size()));
         QCoreApplication::processEvents();
         ui->frameResultFormula->loadResult(result, lastSearchedMass);
-        ui->statusBar->showMessage(QString("%1 result(s) found.")
+        ui->statusBar->showMessage(QString(tr("%1 result(s) found."))
                                           .arg(result.size()));
     }
     setInputWidgetEnabled(MC_TAB_INDEX_GETFORMULA);
@@ -274,20 +274,20 @@ void MainWindow::onFormulaFactoryFinished(bool successful)
 {
     if (successful)
     {
-        QMessageBox::information(this, "Calculation finished",
-                                 QString("Finished importing mass list from file"
-                                         " and calculating formula. \n"
-                                         "%1 mass were processed in total.")
+        QMessageBox::information(this, tr("Calculation finished"),
+                                 QString(tr("Finished importing mass list from "
+                                            "file and calculating formula. \n"
+                                            "%1 mass were processed in total."))
                                         .arg(formulaFactory->countFinished()));
-        ui->statusBar->showMessage("Calculation finished.");
+        ui->statusBar->showMessage(tr("Calculation finished."));
         labelFileLink->show();
     }
     else
     {
-        QMessageBox::warning(this, "Calculation failed",
-                             "Something went wrong during the calculation. \n"
-                             "Please check your input file and try again.");
-        ui->statusBar->showMessage("Calculation failed.");
+        QMessageBox::warning(this, tr("Calculation failed"),
+                             tr("Something went wrong during the calculation.\n"
+                                "Please check your input file and try again."));
+        ui->statusBar->showMessage(tr("Calculation failed."));
     }
     setInputWidgetEnabled(MC_TAB_INDEX_GETFORMULA);
     progressBar->hide();
@@ -333,8 +333,8 @@ void MainWindow::on_buttonGetMass_clicked()
     bool ok = f.parse(ui->textInputFormula->text().toStdString());
     if (!ok)
     {
-        QMessageBox::warning(this, "Invalid formula",
-                             "The formula that you input is incorrect.");
+        QMessageBox::warning(this, tr("Invalid formula"),
+                             tr("The formula that you input is incorrect."));
         return;
     }
     f = f + ui->frameModification->modification();
@@ -347,7 +347,7 @@ void MainWindow::on_buttonGetMass_clicked()
     }
     else
     {
-        ui->textResultMass->setText("(N/A)");
+        ui->textResultMass->setText(tr("(N/A)"));
         ui->textResultMonoMass->setText(
                            QString::number((f.toMass() -
                                             AtomMass::electronMass() * charge) /
@@ -362,18 +362,19 @@ void MainWindow::on_buttonGetFormula_clicked()
 {
     if (formulaGenerator->isRunning())
     {
-        QMessageBox::information(this, "Ongoing calculation",
-                                 "A calculation task is still being processed.\n"
-                                 "Please wait it to be finished "
-                                 "before launch a new one.");
+        QMessageBox::information(this, tr("Ongoing calculation"),
+                                 tr("A calculation task is still being "
+                                    "processed.\n"
+                                    "Please wait it to be finished "
+                                    "before launch a new one."));
             return;
     }
 
     double mass = ui->textInputMass->text().toDouble();
     if (mass <= 0)
     {
-        QMessageBox::warning(this, "Non-positive mass provided",
-                             "The mass should be greater than 0");
+        QMessageBox::warning(this, tr("Non-positive mass provided"),
+                             tr("The mass should be greater than 0"));
         return;
     }
 
@@ -386,10 +387,10 @@ void MainWindow::on_buttonGetFormula_clicked()
     mass -= modificationMass;
     if (mass <= 0)
     {
-        QMessageBox::warning(this, "Non-positive mass requested",
-                             QString("The input mass minus the mass of "
-                                     "modification (%1) should be "
-                                     "greater than 0")
+        QMessageBox::warning(this, tr("Non-positive mass requested"),
+                             QString(tr("The input mass minus the mass of "
+                                        "modification (%1) should be "
+                                        "greater than 0"))
                                      .arg(QString::number(modificationMass)));
         return;
     }
@@ -406,13 +407,13 @@ void MainWindow::on_buttonGetFormula_clicked()
     auto elementRanges = compositionList->getElementRanges();
     if (elementRanges.isEmpty())
     {
-        QMessageBox::warning(this, "No element specified",
-                             "Please select at least one element before "
-                             "calculating the possible formula.");
+        QMessageBox::warning(this, tr("No element specified"),
+                             tr("Please select at least one element before "
+                                "calculating the possible formula."));
         return;
     }
 
-    ui->statusBar->showMessage("Calculating formulae...");
+    ui->statusBar->showMessage(tr("Calculating formulae..."));
     setInputWidgetEnabled(MC_TAB_INDEX_GETFORMULA, false);
     progressBar->setRange(0, 0);
     progressBar->show();
@@ -446,7 +447,7 @@ void MainWindow::on_buttonImportMassFromFile_clicked()
     if (lastImportFileFilter.isEmpty())
         lastImportFileFilter = MC_FORMULA_FILE_SUFFIX_CSV;
     QString sourceFileName =
-            QFileDialog::getOpenFileName(this, "Select a source file",
+            QFileDialog::getOpenFileName(this, tr("Select a source file"),
                                          lastImportFilePath,
                                          filter, &lastImportFileFilter);
     if (sourceFileName.isEmpty())
@@ -457,7 +458,7 @@ void MainWindow::on_buttonImportMassFromFile_clicked()
     if (lastExportFileFilter.isEmpty())
         lastExportFileFilter = lastImportFileFilter;
     QString targetFileName =
-            QFileDialog::getSaveFileName(this, "Select a target file",
+            QFileDialog::getSaveFileName(this, tr("Select a target file"),
                                          lastExportFilePath,
                                          filter, &lastExportFileFilter);
     if (targetFileName.isEmpty())
@@ -467,13 +468,13 @@ void MainWindow::on_buttonImportMassFromFile_clicked()
     auto elementRanges = compositionList->getElementRanges();
     if (elementRanges.isEmpty())
     {
-        QMessageBox::warning(this, "No element specified",
-                             "Please select at least one element before "
-                             "calculating the possible formula.");
+        QMessageBox::warning(this, tr("No element specified"),
+                             tr("Please select at least one element before "
+                                "calculating the possible formula."));
         return;
     }
 
-    ui->statusBar->showMessage("Calculating formulae...");
+    ui->statusBar->showMessage(tr("Calculating formulae..."));
     setInputWidgetEnabled(MC_TAB_INDEX_GETFORMULA, false);
     progressBar->setRange(0, 100);
     progressBar->setValue(0);

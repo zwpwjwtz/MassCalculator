@@ -51,8 +51,8 @@ void CompositionSelectorDelegate::setModelData(QWidget* editor,
     }
     else
     {
-        QMessageBox::warning(nullptr, "Invalid element name",
-                             "The name that you input does not represent "
-                             "any element. Please check and try again.");
+        QMessageBox::warning(nullptr, tr("Invalid element name"),
+                             tr("The name that you input does not represent "
+                                "any element. Please check and try again."));
     }
 }
