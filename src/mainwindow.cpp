@@ -291,7 +291,7 @@ void MainWindow::on_buttonGetMass_clicked()
     }
     f = f + ui->frameModification->modification();
 
-    int charge = abs(ui->frameModification->charge());
+    int charge = ui->frameModification->charge();
     if (charge == 0)
     {
         ui->textResultMass->setText(QString::number(f.toAverageMass()));
@@ -301,8 +301,9 @@ void MainWindow::on_buttonGetMass_clicked()
     {
         ui->textResultMass->setText("(N/A)");
         ui->textResultMonoMass->setText(
-                           QString::number(f.toMass() / charge +
-                                           AtomMass::electronMass(),
+                           QString::number((f.toMass() -
+                                            AtomMass::electronMass() * charge) /
+                                           abs(charge),
                                            'f', 6));
     }
     ui->textResultFormula->setText(
@@ -327,6 +328,10 @@ void MainWindow::on_buttonGetFormula_clicked()
                              "The mass should be greater than 0");
         return;
     }
+
+    int charge = ui->frameMassModification->charge();
+    if (charge != 0)
+        mass = mass * abs(charge) + AtomMass::electronMass() * charge;
 
     Formula modification(ui->frameMassModification->modification());
     double modificationMass = modification.toMass();
