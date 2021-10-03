@@ -36,6 +36,9 @@
     </property>
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -196,17 +199,56 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonImportMassFromFile">
-            <property name="toolTip">
-             <string>Import a list of mass from file</string>
-            </property>
-            <property name="icon">
-             <iconset resource="resources.qrc">
-              <normaloff>:/icons/document-open.png</normaloff>:/icons/document-open.png</iconset>
+           <widget class="QPushButton" name="buttonShowImportMassFromFile">
+            <property name="text">
+             <string>...</string>
             </property>
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QFrame" name="frameImportMassFromFile">
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Import from file:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="textMassImportFile">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="buttonImportMassFromFile">
+             <property name="toolTip">
+              <string>Import a list of mass from file</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/icons/document-open.png</normaloff>:/icons/document-open.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -244,10 +286,20 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="buttonShowMassModification">
+            <property name="text">
+             <string>e-</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox">
+         <widget class="FrameFormulaModification" name="frameMassModification"/>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="frameMassTolerance">
           <property name="title">
            <string>Tolerance</string>
           </property>
@@ -295,7 +347,7 @@
              <item>
               <widget class="QRadioButton" name="radioMassToleranceAbsolute">
                <property name="text">
-                <string>Abso&amp;lute(Da)</string>
+                <string>&amp;Absolute(Da)</string>
                </property>
                <property name="checked">
                 <bool>true</bool>
@@ -305,7 +357,7 @@
              <item>
               <widget class="QRadioButton" name="radioMassToleranceRelative">
                <property name="text">
-                <string>Relati&amp;ve(ppm)</string>
+                <string>&amp;Relative(ppm)</string>
                </property>
               </widget>
              </item>
@@ -403,7 +455,11 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QPlainTextEdit" name="textAbout"/>
+             <widget class="QPlainTextEdit" name="textAbout">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>

@@ -25,6 +25,8 @@ public:
 
 protected:
     void changeEvent(QEvent *e);
+    bool eventFilter(QObject* object, QEvent* event);
+    void keyPressEvent(QKeyEvent *e);
     void resizeEvent(QResizeEvent* e);
 
 private:
@@ -60,6 +62,8 @@ private slots:
     void on_buttonAllowedElement_clicked();
     void on_buttonImportMassFromFile_clicked();
     void on_buttonModification_clicked();
+    void on_buttonShowImportMassFromFile_clicked();
+    void on_buttonShowMassModification_clicked();
 };
 
 #endif // MAINWINDOW_H

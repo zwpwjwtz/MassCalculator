@@ -26,12 +26,12 @@ bool Formula::parse(const std::string& formula)
     for (long pos = formula.length() - 1; pos >= 0; pos--)
     {
         c = formula.at(pos);
-        if (c >= '0' && c <= '9')
+        if ((c >= '0' && c <= '9') || c == '+' || c == '-')
         {
             // Reading a number
             if (nameBuffer.length() > 0)
             {
-                // Unparse (invalid) atom name; ignore it and continue
+                // Unparsed (invalid) atom name; ignore it and continue
                 errorFlag = true;
                 nameBuffer.clear();
             }
@@ -45,7 +45,7 @@ bool Formula::parse(const std::string& formula)
                 reversedNumberBuffer.assign(numberBuffer.crbegin(),
                                             numberBuffer.crend());
                 atomCount = strtol(reversedNumberBuffer.c_str(), &p, 10);
-                if (*p != '\0' || atomCount < 0)
+                if (*p != '\0')
                 {
                     // Invalid subscript
                     errorFlag = true;
@@ -125,10 +125,10 @@ std::string Formula::toString() const
     std::ostringstream result;
     for (auto i=elements.cbegin(); i!=elements.cend(); i++)
     {
-        if (i->second > 1)
-            result << AtomName::abbreviation(i->first.first) << i->second;
-        else if (i->second == 1.0)
+        if (i->second == 1.0)
             result << AtomName::abbreviation(i->first.first);
+        else if (i->second != 0.0)
+            result << AtomName::abbreviation(i->first.first) << i->second;
     }
     return result.str();
 }
@@ -150,10 +150,10 @@ Formula::toString(const std::vector<std::string>& elementOrder) const
         }
         if (i != tempElementList.end())
         {
-            if (i->second > 1)
-                result << AtomName::abbreviation(i->first.first) << i->second;
-            else if (i->second == 1.0)
+            if (i->second == 1.0)
                 result << AtomName::abbreviation(i->first.first);
+            else if (i->second != 0.0)
+                result << AtomName::abbreviation(i->first.first) << i->second;
             tempElementList.erase(i);
         }
     }
@@ -161,10 +161,10 @@ Formula::toString(const std::vector<std::string>& elementOrder) const
     // Output the rest elements
     for (i=tempElementList.begin(); i!=tempElementList.cend(); i++)
     {
-        if (i->second > 1)
-            result << AtomName::abbreviation(i->first.first) << i->second;
-        else if (i->second == 1.0)
+        if (i->second == 1.0)
             result << AtomName::abbreviation(i->first.first);
+        else if (i->second != 0.0)
+            result << AtomName::abbreviation(i->first.first) << i->second;
     }
     return result.str();
 }

@@ -13,11 +13,11 @@ struct MassTolerance
 class Config
 {
 public:
-    int formulaCharge() const;
-    void setFormulaCharge(int charge);
-
     void loadFormulaModification(FrameFormulaModification& widget);
     void saveFormulaModification(const FrameFormulaModification& widget);
+
+    void loadMassModification(FrameFormulaModification& widget);
+    void saveMassModification(const FrameFormulaModification& widget);
 
     MassTolerance massTolerance() const;
     void setMassTolerance(const MassTolerance& tolerance);

@@ -28,8 +28,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->textInputFormula->setFocus();
+    ui->tabWidget->setCurrentIndex(0);
     ui->frameModification->hide();
+    ui->frameMassModification->hide();
+    ui->frameImportMassFromFile->hide();
+    ui->textInputMass->installEventFilter(this);
+    ui->textInputFormula->installEventFilter(this);
+    ui->textMassToleranceLeft->installEventFilter(this);
+    ui->textMassToleranceRight->installEventFilter(this);
 
     labelFileLink = new QLabel(this);
     labelFileLink->setVisible(false);
@@ -95,6 +101,39 @@ void MainWindow::changeEvent(QEvent *e)
                    "for more details.\n"));
 }
 
+bool MainWindow::eventFilter(QObject* object, QEvent* event)
+{
+    if (event->type() == QEvent::KeyPress)
+    {
+        keyPressEvent(static_cast<QKeyEvent*>(event));
+        return event->isAccepted();
+    }
+    return QObject::eventFilter(object, event);
+}
+
+void MainWindow::keyPressEvent(QKeyEvent* e)
+{
+    if (e->modifiers() == Qt::KeyboardModifier::AltModifier)
+    {
+        switch (e->key())
+        {
+            case Qt::Key::Key_1:
+                ui->tabWidget->setCurrentIndex(0);
+                break;
+            case Qt::Key::Key_2:
+                ui->tabWidget->setCurrentIndex(1);
+                break;
+            case Qt::Key::Key_3:
+                ui->tabWidget->setCurrentIndex(2);
+                break;
+            default:;
+        }
+        e->accept();
+    }
+    else
+        e->ignore();
+}
+
 void MainWindow::resizeEvent(QResizeEvent* e)
 {
     Q_UNUSED(e)
@@ -105,11 +144,11 @@ void MainWindow::resizeEvent(QResizeEvent* e)
 
 void MainWindow::loadPreferences()
 {
-    ui->frameModification->setCharge(appConfig.formulaCharge());
     appConfig.loadFormulaModification(*ui->frameModification);
+    appConfig.loadMassModification(*ui->frameMassModification);
 
     MassTolerance tolerance(appConfig.massTolerance());
-    if (tolerance.min != 0 || tolerance.max != 0)
+    if (tolerance.min != 0.0 || tolerance.max != 0.0)
     {
         ui->textMassToleranceLeft->setText(QString::number(tolerance.min));
         ui->textMassToleranceRight->setText(QString::number(tolerance.max));
@@ -120,8 +159,8 @@ void MainWindow::loadPreferences()
 
 void MainWindow::savePreferences()
 {
-    appConfig.setFormulaCharge(ui->frameModification->charge());
     appConfig.saveFormulaModification(*ui->frameModification);
+    appConfig.saveMassModification(*ui->frameMassModification);
 
     appConfig.setMassTolerance({ui->textMassToleranceLeft->text().toDouble(),
                                 ui->textMassToleranceRight->text().toDouble(),
@@ -288,6 +327,19 @@ void MainWindow::on_buttonGetFormula_clicked()
                              "The mass should be greater than 0");
         return;
     }
+
+    Formula modification(ui->frameMassModification->modification());
+    double modificationMass = modification.toMass();
+    mass -= modificationMass;
+    if (mass <= 0)
+    {
+        QMessageBox::warning(this, "Non-positive mass requested",
+                             QString("The input mass minus the mass of "
+                                     "modification (%1) should be "
+                                     "greater than 0")
+                                     .arg(QString::number(modificationMass)));
+        return;
+    }
     lastSearchedMass = mass;
 
     double toleranceMin = ui->textMassToleranceLeft->text().toDouble();
@@ -346,6 +398,7 @@ void MainWindow::on_buttonImportMassFromFile_clicked()
                                          filter, &lastImportFileFilter);
     if (sourceFileName.isEmpty())
         return;
+    ui->textMassImportFile->setText(sourceFileName);
     lastImportFilePath = sourceFileName;
 
     if (lastExportFileFilter.isEmpty())
@@ -387,4 +440,16 @@ void MainWindow::on_buttonImportMassFromFile_clicked()
 void MainWindow::on_buttonModification_clicked()
 {
     ui->frameModification->setVisible(!ui->frameModification->isVisible());
+}
+
+void MainWindow::on_buttonShowImportMassFromFile_clicked()
+{
+    ui->frameImportMassFromFile->setVisible(
+                                    !ui->frameImportMassFromFile->isVisible());
+}
+
+void MainWindow::on_buttonShowMassModification_clicked()
+{
+    ui->frameMassModification->setVisible(
+                                    !ui->frameMassModification->isVisible());
 }
