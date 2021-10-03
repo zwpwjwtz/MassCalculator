@@ -70,16 +70,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonModification">
-            <property name="toolTip">
-             <string>Set modification</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QPushButton" name="buttonGetMass">
             <property name="toolTip">
              <string>Calculate the molecular weight of input formula</string>
@@ -87,6 +77,17 @@
             <property name="icon">
              <iconset resource="resources.qrc">
               <normaloff>:/icons/return.png</normaloff>:/icons/return.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="buttonModification">
+            <property name="toolTip">
+             <string>Set modification</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/view-more-horizontal.png</normaloff>:/icons/view-more-horizontal.png</iconset>
             </property>
            </widget>
           </item>
@@ -203,8 +204,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="buttonShowImportMassFromFile">
-            <property name="text">
-             <string>...</string>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/view-more-horizontal.png</normaloff>:/icons/view-more-horizontal.png</iconset>
             </property>
            </widget>
           </item>
@@ -294,8 +296,9 @@
             <property name="toolTip">
              <string>Set modification</string>
             </property>
-            <property name="text">
-             <string>e-</string>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/electron.png</normaloff>:/icons/electron.png</iconset>
             </property>
            </widget>
           </item>

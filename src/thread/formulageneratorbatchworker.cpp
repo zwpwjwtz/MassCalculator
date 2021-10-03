@@ -89,13 +89,14 @@ void FormulaGeneratorBatchWorker::run()
         if (p > 0)
         {
             // Line containing multiple fields: take the first one
-            mass = buffer.mid(0, p - 1).replace('"', nullptr)
+            mass = buffer.mid(0, p - 1).replace('"', nullptr).trimmed()
                                        .toDouble(&conversionOK);
         }
         else if (p < 0)
         {
             // Line contaning only one field
-            mass = buffer.replace('"', nullptr).toDouble(&conversionOK);
+            mass = buffer.replace('"', nullptr).trimmed()
+                         .toDouble(&conversionOK);
         }
         else
         {

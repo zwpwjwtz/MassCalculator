@@ -6,6 +6,7 @@
 LabeledText::LabeledText(QWidget *parent) : QLineEdit(parent)
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
+    layout->setContentsMargins(10, 4, 10, 4);
     setLayout(layout);
 
     label = new QLabel(this);
@@ -33,7 +34,8 @@ void LabeledText::setLabelAlignment(Qt::Alignment alignment)
         case Qt::AlignLeft:
         case Qt::AlignHCenter:
         case Qt::AlignRight:
-            static_cast<QHBoxLayout*>(layout())->setAlignment(alignment);
+            static_cast<QHBoxLayout*>(layout())
+                    ->setAlignment(alignment | Qt::AlignVCenter);
             labelPosition = alignment;
             adjustTextMargin();
             break;

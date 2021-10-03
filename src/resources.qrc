@@ -7,5 +7,8 @@
         <file>icons/dialog-ok-apply.png</file>
         <file>icons/return.png</file>
         <file>icons/document-open.png</file>
+        <file>icons/view-more-horizontal.png</file>
+        <file>icons/electron.png</file>
+        <file>translation/MassCalculator_zh_CN.qm</file>
     </qresource>
 </RCC>
