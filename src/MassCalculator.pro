@@ -41,7 +41,8 @@ SOURCES += \
     thread/formulageneratorbatchworker.cpp \
     widget/frameformulamodification.cpp \
     calculator/formula_adduct.cpp \
-    config.cpp
+    config.cpp \
+    widget/labeledtext.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -63,7 +64,8 @@ HEADERS += \
     widget/frameformulamodification.h \
     calculator/formula_adduct.h \
     global.h \
-    config.h
+    config.h \
+    widget/labeledtext.h
 
 FORMS += \
         mainwindow.ui \

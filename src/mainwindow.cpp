@@ -33,9 +33,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->frameMassModification->hide();
     ui->frameImportMassFromFile->hide();
     ui->textInputMass->installEventFilter(this);
+    ui->textInputMass->setLabelTextFormat(Qt::RichText);
     ui->textInputFormula->installEventFilter(this);
+    ui->textInputFormula->setLabelTextFormat(Qt::RichText);
     ui->textMassToleranceLeft->installEventFilter(this);
     ui->textMassToleranceRight->installEventFilter(this);
+    connect(ui->frameModification, SIGNAL(chargeChanged()),
+            this, SLOT(onFormulaModificationChanged()));
+    connect(ui->frameModification, SIGNAL(modificationChanged()),
+            this, SLOT(onFormulaModificationChanged()));
+    connect(ui->frameMassModification, SIGNAL(chargeChanged()),
+            this, SLOT(onMassModificationChanged()));
+    connect(ui->frameMassModification, SIGNAL(modificationChanged()),
+            this, SLOT(onMassModificationChanged()));
 
     labelFileLink = new QLabel(this);
     labelFileLink->setVisible(false);
@@ -198,6 +208,44 @@ void MainWindow::onCompositionSelectorFinished()
 {
     compositionList->hide();
     showAllowedElementRanges();
+}
+
+void MainWindow::onFormulaModificationChanged()
+{
+    QString modificationText(
+                QString::fromStdString(
+                        ui->frameModification->modification().toString()));
+    if (!modificationText.isEmpty())
+        modificationText.prepend("+[").append("]");
+
+    int charge = ui->frameModification->charge();
+    if (charge != 0)
+    {
+        modificationText.append(modificationText.isEmpty() ? nullptr : ", ")
+                        .append(QString::number(abs(charge))
+                        .append(charge > 0 ? '+' : '-'));
+    }
+
+    ui->textInputFormula->setLabelText(modificationText);
+}
+
+void MainWindow::onMassModificationChanged()
+{
+    QString modificationText(
+                QString::fromStdString(
+                        ui->frameMassModification->modification().toString()));
+    if (!modificationText.isEmpty())
+        modificationText.prepend("-[").append("]");
+
+    int charge = ui->frameMassModification->charge();
+    if (charge != 0)
+    {
+        modificationText.append(modificationText.isEmpty() ? nullptr : ", ")
+                        .append(QString::number(abs(charge))
+                        .append(charge > 0 ? '+' : '-'));
+    }
+
+    ui->textInputMass->setLabelText(modificationText);
 }
 
 void MainWindow::onFormulaGeneratorFinished()

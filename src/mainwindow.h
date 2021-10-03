@@ -49,6 +49,8 @@ private:
 
 private slots:
     void onCompositionSelectorFinished();
+    void onFormulaModificationChanged();
+    void onMassModificationChanged();
     void onFormulaGeneratorFinished();
     void onFormulaFactoryFinished(bool successful);
     void onFormulaFactoryProgressed(double finishedPercent);

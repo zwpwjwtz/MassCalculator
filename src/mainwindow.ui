@@ -63,7 +63,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="textInputFormula">
+           <widget class="LabeledText" name="textInputFormula">
             <property name="placeholderText">
              <string>C6H12O6</string>
             </property>
@@ -185,7 +185,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="textInputMass"/>
+           <widget class="LabeledText" name="textInputMass"/>
           </item>
           <item>
            <widget class="QPushButton" name="buttonGetFormula">
@@ -529,6 +529,11 @@
    <extends>QFrame</extends>
    <header>widget/frameformulamodification.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LabeledText</class>
+   <extends>QLineEdit</extends>
+   <header>widget/labeledtext.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -23,6 +23,10 @@ public:
     void setModification(const Formula& formula,
                          const QString& text = QString());
 
+signals:
+    void chargeChanged();
+    void modificationChanged();
+
 protected:
     void changeEvent(QEvent *e);
 

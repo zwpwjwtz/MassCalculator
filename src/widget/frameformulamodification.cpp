@@ -10,6 +10,11 @@ FrameFormulaModification::FrameFormulaModification(QWidget *parent) :
 {
     ui->setupUi(this);
     loadDefaultModification();
+
+    connect(ui->spinCharge, SIGNAL(valueChanged(int)),
+            this, SIGNAL(chargeChanged()));
+    connect(ui->comboAdduct, SIGNAL(currentIndexChanged(int)),
+            this, SIGNAL(modificationChanged()));
 }
 
 FrameFormulaModification::~FrameFormulaModification()
