@@ -42,7 +42,10 @@ SOURCES += \
     widget/frameformulamodification.cpp \
     calculator/formula_adduct.cpp \
     config.cpp \
-    widget/labeledtext.cpp
+    widget/labeledtext.cpp \
+    component/formformulatomass.cpp \
+    component/formmasstoformula.cpp \
+    component/formabout.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -65,13 +68,19 @@ HEADERS += \
     calculator/formula_adduct.h \
     global.h \
     config.h \
-    widget/labeledtext.h
+    widget/labeledtext.h \
+    component/formformulatomass.h \
+    component/formmasstoformula.h \
+    component/formabout.h
 
 FORMS += \
         mainwindow.ui \
     widget/compositionselector.ui \
     widget/frameformulalist.ui \
-    widget/frameformulamodification.ui
+    widget/frameformulamodification.ui \
+    component/formformulatomass.ui \
+    component/formmasstoformula.ui \
+    component/formabout.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

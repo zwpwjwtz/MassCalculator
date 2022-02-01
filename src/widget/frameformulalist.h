@@ -20,6 +20,9 @@ public:
     explicit FrameFormulaList(QWidget *parent = nullptr);
     ~FrameFormulaList();
 
+    void loadPreferences();
+    void savePreferences();
+
     void clear();
     void loadResult(const std::list<Formula>& formulaList,
                     double expectedMass = 0);
