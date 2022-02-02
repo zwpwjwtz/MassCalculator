@@ -10,5 +10,6 @@
         <file>icons/view-more-horizontal.png</file>
         <file>icons/electron.png</file>
         <file>translation/MassCalculator_zh_CN.qm</file>
+        <file>icons/delete.png</file>
     </qresource>
 </RCC>

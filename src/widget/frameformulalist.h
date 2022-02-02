@@ -53,6 +53,7 @@ private slots:
     void onViewHeaderSearchResultClicked(int columnIndex);
     void on_buttonOpenLink_clicked();
     void on_buttonSave_clicked();
+    void on_buttonRemove_clicked();
 };
 
 #endif // FRAMEFORMULALIST_H

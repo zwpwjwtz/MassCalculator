@@ -243,3 +243,15 @@ void FrameFormulaList::on_buttonSave_clicked()
 
     lastSavePath = QFileInfo(fileName).path();
 }
+
+void FrameFormulaList::on_buttonRemove_clicked()
+{
+    QModelIndexList selectedIndexes =
+                    ui->viewSearchResult->selectionModel()->selectedIndexes();
+
+    // Sort the selected indexes (by row as default)
+    std::sort(selectedIndexes.begin(), selectedIndexes.end());
+
+    for (int i = selectedIndexes.count() - 1; i >= 0; i--)
+        modelResultProxy->removeRow(selectedIndexes[i].row());
+}

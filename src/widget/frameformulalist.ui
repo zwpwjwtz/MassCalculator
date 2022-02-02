@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Query result</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -30,28 +30,22 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="frameResultToolbar">
+    <widget class="QTableView" name="viewSearchResult">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonOpenLink">
+      <widget class="QPushButton" name="buttonRemove">
        <property name="toolTip">
-        <string>Search selected formula online (PubChem)</string>
+        <string>Remove selected formula</string>
        </property>
        <property name="icon">
         <iconset resource="../resources.qrc">
-         <normaloff>:/icons/globe.png</normaloff>:/icons/globe.png</iconset>
+         <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
        </property>
       </widget>
      </item>
@@ -66,14 +60,18 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="buttonOpenLink">
+       <property name="toolTip">
+        <string>Search selected formula online (PubChem)</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources.qrc">
+         <normaloff>:/icons/globe.png</normaloff>:/icons/globe.png</iconset>
+       </property>
+      </widget>
+     </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QTableView" name="viewSearchResult">
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>
