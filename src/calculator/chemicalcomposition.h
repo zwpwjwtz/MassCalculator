@@ -27,10 +27,14 @@ public:
     bool operator!=(const ChemicalComposition& arg) const;
     ChemicalComposition operator+(const ChemicalComposition& arg) const;
     ChemicalComposition operator-(const ChemicalComposition& arg) const;
+    ChemicalComposition operator*(double count) const;
+    ChemicalComposition operator/(double count) const;
 
 protected:
     std::map<int, bool> defaultIsotope;
     std::map<std::pair<int, int>, double> elements;
 };
+
+ChemicalComposition operator*(double count, const ChemicalComposition& arg);
 
 #endif // CHEMICALCOMPOSITION_H

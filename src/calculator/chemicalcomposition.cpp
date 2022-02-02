@@ -172,6 +172,26 @@ ChemicalComposition
 ChemicalComposition::operator+(const ChemicalComposition& arg) const
 {
     ChemicalComposition result(*this);
+
+    // Merge "defaultIsotope"
+    std::map<int, bool>::const_iterator m;
+    std::map<int, bool>::iterator n;
+    for (m = arg.defaultIsotope.cbegin(); m!= arg.defaultIsotope.cend(); m++)
+    {
+        for (n = result.defaultIsotope.begin();
+             n!= result.defaultIsotope.end(); n++)
+        {
+            if (m->first == n->first)
+            {
+                if (m->second ^ n->second)
+                    n->second = false;
+            }
+        }
+        if (n == result.defaultIsotope.end())
+            result.defaultIsotope.insert(*m);
+    }
+
+    // Merge "elements"
     std::map<std::pair<int, int>, double>::const_iterator i;
     std::map<std::pair<int, int>, double>::iterator j;
     for (i=arg.elements.cbegin(); i!=arg.elements.cend(); i++)
@@ -182,7 +202,7 @@ ChemicalComposition::operator+(const ChemicalComposition& arg) const
                 i->first.second == j->first.second)
             {
                 j->second += i->second;
-                if (j->second == 0)
+                if (j->second == 0.0)
                     result.clearIsotope(j->first.first, j->first.second);
                 break;
             }
@@ -190,6 +210,7 @@ ChemicalComposition::operator+(const ChemicalComposition& arg) const
         if (j == result.elements.end())
             result.elements.insert(*i);
     }
+
     return result;
 }
 
@@ -197,6 +218,26 @@ ChemicalComposition
 ChemicalComposition::operator-(const ChemicalComposition& arg) const
 {
     ChemicalComposition result(*this);
+
+    // Merge "defaultIsotope"
+    std::map<int, bool>::const_iterator m;
+    std::map<int, bool>::iterator n;
+    for (m = arg.defaultIsotope.cbegin(); m!= arg.defaultIsotope.cend(); m++)
+    {
+        for (n = result.defaultIsotope.begin();
+             n!= result.defaultIsotope.end(); n++)
+        {
+            if (m->first == n->first)
+            {
+                if (m->second ^ n->second)
+                    n->second = false;
+            }
+        }
+        if (n == result.defaultIsotope.end())
+            result.defaultIsotope.insert(*m);
+    }
+
+    // Merge "elements"
     std::map<std::pair<int, int>, double>::const_iterator i;
     std::map<std::pair<int, int>, double>::iterator j;
     for (i=arg.elements.cbegin(); i!=arg.elements.cend(); i++)
@@ -207,7 +248,7 @@ ChemicalComposition::operator-(const ChemicalComposition& arg) const
                 i->first.second == j->first.second)
             {
                 j->second -= i->second;
-                if (j->second == 0)
+                if (j->second == 0.0)
                     result.clearIsotope(j->first.first, j->first.second);
                 break;
             }
@@ -215,5 +256,32 @@ ChemicalComposition::operator-(const ChemicalComposition& arg) const
         if (j == result.elements.end())
             result.elements.insert(*i);
     }
+
     return result;
+}
+
+ChemicalComposition ChemicalComposition::operator*(double count) const
+{
+    ChemicalComposition result(*this);
+    std::map<std::pair<int, int>, double>::iterator i;
+    for (i=result.elements.begin(); i!=result.elements.end(); i++)
+        i->second *= count;
+    return result;
+}
+
+ChemicalComposition ChemicalComposition::operator/(double count) const
+{
+    if (count == 0.0)
+        return ChemicalComposition();
+
+    ChemicalComposition result(*this);
+    std::map<std::pair<int, int>, double>::iterator i;
+    for (i=result.elements.begin(); i!=result.elements.end(); i++)
+        i->second /= count;
+    return result;
+}
+
+ChemicalComposition operator*(double count, const ChemicalComposition& arg)
+{
+    return arg * count;
 }

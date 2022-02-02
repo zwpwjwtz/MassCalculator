@@ -12,20 +12,38 @@ Formula::Formula(const ChemicalComposition& composition)
     : ChemicalComposition (composition)
 {}
 
-bool Formula::parse(const std::string& formula)
+bool Formula::parse(const std::string &formula)
+{
+    // Parse the formula recursively
+    long beginning = 0;
+    return parseGroup(formula, beginning, *this);
+}
+
+bool Formula::parseGroup(const std::string& formula, long& beginning,
+                         ChemicalComposition& result)
 {
     char c;
     char* p;
     int atomNumber;
-    double atomCount = 0, previousAtomCount;
+    double atomCount = 0;
     std::string numberBuffer, reversedNumberBuffer;
     std::string nameBuffer, reversedNameBuffer;
 
     // Parse the formula reversely
+    result.clear();
+    long pos2;
     bool errorFlag = false;
-    for (long pos = formula.length() - 1; pos >= 0; pos--)
+    ChemicalComposition tempComposition;
+    for (long pos = formula.length() - 1; pos >= beginning; pos--)
     {
         c = formula.at(pos);
+
+        if (c == '(')
+        {
+            // End parsing a group of atoms
+            beginning = pos;
+            break;
+        }
         if ((c >= '0' && c <= '9') || c == '+' || c == '-')
         {
             // Reading a number
@@ -37,7 +55,7 @@ bool Formula::parse(const std::string& formula)
             }
             numberBuffer.push_back(c);
         }
-        else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+        else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == ')')
         {
             if (numberBuffer.length() > 0)
             {
@@ -54,24 +72,38 @@ bool Formula::parse(const std::string& formula)
             }
             else
             {
-                if (atomCount == 0)
+                if (atomCount == 0.0)
                 {
                     // Atom without subscript; seen as single atom
                     atomCount = 1;
                 }
             }
 
-            // Parse the atom name
-            nameBuffer.push_back(c);
-            reversedNameBuffer.assign(nameBuffer.crbegin(),
-                                      nameBuffer.crend());
-            atomNumber = AtomName::numberFromAbbreviation(reversedNameBuffer);
-            if (atomNumber > 0)
+            if (c == ')')
             {
-                previousAtomCount = countElement(atomNumber);
-                setElement(atomNumber, previousAtomCount + atomCount);
-                nameBuffer.clear();
-                atomCount = 0;
+                // Begin parsing a group of atoms
+                pos2 = beginning;
+                errorFlag |= !parseGroup(formula.substr(0, pos), pos2,
+                                         tempComposition);
+                result = result + tempComposition * atomCount;
+                pos = pos2;
+            }
+            else
+            {
+                // Parse the atom name
+                nameBuffer.push_back(c);
+                reversedNameBuffer.assign(nameBuffer.crbegin(),
+                                          nameBuffer.crend());
+                atomNumber =
+                        AtomName::numberFromAbbreviation(reversedNameBuffer);
+                if (atomNumber > 0)
+                {
+                    result.setElement(atomNumber,
+                                      result.countElement(atomNumber) +
+                                      atomCount);
+                    nameBuffer.clear();
+                    atomCount = 0;
+                }
             }
         }
         else if (c >= '\0' && c <= ' ')

@@ -19,6 +19,10 @@ public:
 
     std::string toString() const;
     std::string toString(const std::vector<std::string>& elementOrder) const;
+
+protected:
+     bool parseGroup(const std::string& formula, long &beginning,
+                     ChemicalComposition& result);
 };
 
 #endif // FORMULA_H
