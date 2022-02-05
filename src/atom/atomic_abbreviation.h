@@ -120,4 +120,6 @@
 #define MC_ATOMIC_ABBR_115         "Mc"
 #define MC_ATOMIC_ABBR_116         "Lv"
 
+extern const char* const mc_atomname_abbr[MC_ATOMIC_ABBR_MAX + 1];
+
 #endif // ATOMIC_ABBR_H

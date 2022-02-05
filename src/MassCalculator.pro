@@ -45,7 +45,12 @@ SOURCES += \
     widget/labeledtext.cpp \
     component/formformulatomass.cpp \
     component/formmasstoformula.cpp \
-    component/formabout.cpp
+    component/formabout.cpp \
+    atom/atomic_weight_isotopic.cpp \
+    atom/atomic_weight.cpp \
+    atom/atomic_weight_average.cpp \
+    atom/atomic_abundance_isotopic.cpp \
+    atom/atomic_abbreviation.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -71,7 +76,9 @@ HEADERS += \
     widget/labeledtext.h \
     component/formformulatomass.h \
     component/formmasstoformula.h \
-    component/formabout.h
+    component/formabout.h \
+    atom/atomic_weight_isotopic.h \
+    atom/atomic_abundance_isotopic.h
 
 FORMS += \
         mainwindow.ui \

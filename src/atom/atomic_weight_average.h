@@ -121,4 +121,6 @@
 #define MC_ATOMIC_WEIGHT_AVG_117	 294
 #define MC_ATOMIC_WEIGHT_AVG_118	 294
 
+extern const double mc_atommass_average[MC_ATOMIC_WEIGHT_AVG_MAX + 1];
+
 #endif // ATOMIC_WEIGHT_AVERAGE_H

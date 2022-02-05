@@ -120,4 +120,6 @@
 #define MC_ATOMIC_WEIGHT_115         288.19249
 #define MC_ATOMIC_WEIGHT_116         292.19979
 
+extern const double mc_atommass_monoisotopic[MC_ATOMIC_WEIGHT_MAX + 1];
+
 #endif // ATOMIC_WEIGHT_H
