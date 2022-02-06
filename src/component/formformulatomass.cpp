@@ -94,7 +94,11 @@ void FormFormulaToMass::on_buttonGetMass_clicked()
     int charge = ui->frameModification->charge();
     if (charge == 0)
     {
-        ui->textResultMass->setText(QString::number(f.toAverageMass()));
+        double averageMass = f.toAverageMass();
+        if (averageMass >= 0)
+            ui->textResultMass->setText(QString::number(averageMass));
+        else
+            ui->textResultMass->setText(tr("(N/A)"));
         ui->textResultMonoMass->setText(QString::number(f.toMass()));
     }
     else

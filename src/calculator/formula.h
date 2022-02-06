@@ -11,6 +11,10 @@ public:
     Formula();
     Formula(const ChemicalComposition& composition);
 
+    double countElement(int atomNumber) const;
+    void setElement(int atomNumber, double count);
+    void setIsotope(int atomNumber, int nominalMass, double count);
+
     bool parse(const std::string& formula);
 
     double toAverageMass() const;
@@ -22,7 +26,7 @@ public:
 
 protected:
      bool parseGroup(const std::string& formula, long &beginning,
-                     ChemicalComposition& result);
+                     Formula &result);
 };
 
 #endif // FORMULA_H

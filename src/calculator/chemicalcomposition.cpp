@@ -146,6 +146,7 @@ void ChemicalComposition::setIsotope(int atomNumber,
         {
             // No isotopic pattern specified yet;
             // clear the default entry and create a new one
+            j->second = false;
             elements.erase(elements.find({atomNumber, 0}));
             elements.insert({{atomNumber, nominalMass}, count});
         }
@@ -153,7 +154,10 @@ void ChemicalComposition::setIsotope(int atomNumber,
         {
             // Isotopic pattern already specified; modify it
             i = elements.find({atomNumber, nominalMass});
-            i->second = count;
+            if (i == elements.end())
+                elements.insert({{atomNumber, nominalMass}, count});
+            else
+                i->second = count;
         }
     }
 }

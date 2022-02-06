@@ -50,7 +50,8 @@ SOURCES += \
     atom/atomic_weight.cpp \
     atom/atomic_weight_average.cpp \
     atom/atomic_abundance_isotopic.cpp \
-    atom/atomic_abbreviation.cpp
+    atom/atomic_abbreviation.cpp \
+    calculator/atomabundance.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -78,7 +79,8 @@ HEADERS += \
     component/formmasstoformula.h \
     component/formabout.h \
     atom/atomic_weight_isotopic.h \
-    atom/atomic_abundance_isotopic.h
+    atom/atomic_abundance_isotopic.h \
+    calculator/atomabundance.h
 
 FORMS += \
         mainwindow.ui \

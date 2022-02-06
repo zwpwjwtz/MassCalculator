@@ -4,8 +4,12 @@
 #define MC_ATOMIC_ABUNDANCE_ELEMENT_MAX          92
 #define MC_ATOMIC_ABUNDANCE_ELEMENT_ISOTOPE_MAX  11
 
-extern const double
+extern const float
 mc_atom_abundance_isotopic[MC_ATOMIC_ABUNDANCE_ELEMENT_MAX + 1]
                           [MC_ATOMIC_ABUNDANCE_ELEMENT_ISOTOPE_MAX][2];
+
+extern const int
+mc_atom_abundance_rank[MC_ATOMIC_ABUNDANCE_ELEMENT_MAX + 1]
+                      [MC_ATOMIC_ABUNDANCE_ELEMENT_ISOTOPE_MAX];
 
 #endif // ATOMIC_ABUNDANCE_ISOTOPIC_H

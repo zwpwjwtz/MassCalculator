@@ -1,7 +1,9 @@
 #include <sstream>
+#include <set>
 #include "formula.h"
 #include "atomname.h"
 #include "atommass.h"
+#include "atomabundance.h"
 #include "chemicalcomposition.h"
 
 
@@ -12,6 +14,56 @@ Formula::Formula(const ChemicalComposition& composition)
     : ChemicalComposition (composition)
 {}
 
+double Formula::countElement(int atomNumber) const
+{
+    auto i = defaultIsotope.find(atomNumber);
+    if (i == defaultIsotope.end())
+        return 0;
+    if (i->second)
+    {
+        // No isotopoic pattern set yet; use the default implementation
+        return ChemicalComposition::countElement(atomNumber);
+    }
+    else
+    {
+        // Isotopoic pattern already set; count for the default isotope
+        return ChemicalComposition::countIsotope(atomNumber,
+                             AtomAbundance::mostAbundantMassNumber(atomNumber));
+    }
+}
+
+void Formula::setElement(int atomNumber, double count)
+{
+    auto i = defaultIsotope.find(atomNumber);
+    if (i == defaultIsotope.end() || i->second)
+    {
+        // No isotopoic pattern set yet; use the default implementation
+        ChemicalComposition::setElement(atomNumber, count);
+    }
+    else
+    {
+        // Isotopoic pattern already set; set the default isotope
+        ChemicalComposition::setIsotope(atomNumber,
+                              AtomAbundance::mostAbundantMassNumber(atomNumber),
+                              count);
+    }
+}
+
+void Formula::setIsotope(int atomNumber, int nominalMass, double count)
+{
+    auto i = defaultIsotope.find(atomNumber);
+    if (i != defaultIsotope.end() && i->second)
+    {
+        // Isotopoic pattern already set
+        // Convert the count of element to the count of default isotope
+        double atomCount = ChemicalComposition::countElement(atomNumber);
+        ChemicalComposition::setIsotope(atomNumber,
+                              AtomAbundance::mostAbundantMassNumber(atomNumber),
+                              atomCount);
+    }
+    ChemicalComposition::setIsotope(atomNumber, nominalMass, count);
+}
+
 bool Formula::parse(const std::string &formula)
 {
     // Parse the formula recursively
@@ -20,20 +72,23 @@ bool Formula::parse(const std::string &formula)
 }
 
 bool Formula::parseGroup(const std::string& formula, long& beginning,
-                         ChemicalComposition& result)
+                         Formula& result)
 {
     char c;
     char* p;
-    int atomNumber;
+    int atomNumber = 0;
+    int massNumber = 0;
     double atomCount = 0;
+    bool atomCountSpecified = false;
     std::string numberBuffer, reversedNumberBuffer;
     std::string nameBuffer, reversedNameBuffer;
 
     // Parse the formula reversely
     result.clear();
     long pos2;
+    bool isotope = false;
     bool errorFlag = false;
-    ChemicalComposition tempComposition;
+    Formula tempComposition;
     for (long pos = formula.length() - 1; pos >= beginning; pos--)
     {
         c = formula.at(pos);
@@ -44,7 +99,42 @@ bool Formula::parseGroup(const std::string& formula, long& beginning,
             beginning = pos;
             break;
         }
-        if ((c >= '0' && c <= '9') || c == '+' || c == '-')
+        if (c == '[' && isotope)
+        {
+            if (atomCount > 0 || atomNumber > 0)
+            {
+                // End parsing an isotope (atom with specified mass numbers)
+                if(numberBuffer.length() > 0)
+                {
+                    // Parse the mass number (the superscript)
+                    reversedNumberBuffer.assign(numberBuffer.crbegin(),
+                                                numberBuffer.crend());
+                    massNumber = strtol(reversedNumberBuffer.c_str(), &p, 10);
+                    if (*p != '\0')
+                    {
+                        // Invalid superscript
+                        errorFlag = true;
+                    }
+                    result.setIsotope(atomNumber, massNumber,
+                                      result.countIsotope(atomNumber,
+                                                          massNumber) +
+                                      atomCount);
+                    numberBuffer.clear();
+                }
+                else
+                {
+                    // The isotope flag was set but no mass number was specified
+                    // Ignore the isotope flag
+                    result.setElement(atomNumber,
+                                      result.countElement(atomNumber) +
+                                      atomCount);
+                }
+            }
+            atomCount = 0;
+            atomCountSpecified = false;
+            isotope = false;
+        }
+        else if ((c >= '0' && c <= '9') || c == '+' || c == '-')
         {
             // Reading a number
             if (nameBuffer.length() > 0)
@@ -55,7 +145,8 @@ bool Formula::parseGroup(const std::string& formula, long& beginning,
             }
             numberBuffer.push_back(c);
         }
-        else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == ')')
+        else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
+                 c == ')' || c == ']')
         {
             if (numberBuffer.length() > 0)
             {
@@ -68,11 +159,12 @@ bool Formula::parseGroup(const std::string& formula, long& beginning,
                     // Invalid subscript
                     errorFlag = true;
                 }
+                atomCountSpecified = true;
                 numberBuffer.clear();
             }
             else
             {
-                if (atomCount == 0.0)
+                if (atomCount == 0.0 && !atomCountSpecified)
                 {
                     // Atom without subscript; seen as single atom
                     atomCount = 1;
@@ -82,11 +174,17 @@ bool Formula::parseGroup(const std::string& formula, long& beginning,
             if (c == ')')
             {
                 // Begin parsing a group of atoms
+                isotope = false;
                 pos2 = beginning;
                 errorFlag |= !parseGroup(formula.substr(0, pos), pos2,
                                          tempComposition);
                 result = result + tempComposition * atomCount;
                 pos = pos2;
+            }
+            else if (c == ']')
+            {
+                // Begin parsing an isotope
+                isotope = true;
             }
             else
             {
@@ -98,11 +196,17 @@ bool Formula::parseGroup(const std::string& formula, long& beginning,
                         AtomName::numberFromAbbreviation(reversedNameBuffer);
                 if (atomNumber > 0)
                 {
-                    result.setElement(atomNumber,
-                                      result.countElement(atomNumber) +
-                                      atomCount);
+                    // The atom name is valid
+                    if (!isotope)
+                    {
+                        // No mass number specified; append it directly
+                        result.setElement(atomNumber,
+                                          result.countElement(atomNumber) +
+                                          atomCount);
+                        atomCountSpecified = false;
+                        atomCount = 0;
+                    }
                     nameBuffer.clear();
-                    atomCount = 0;
                 }
             }
         }
@@ -127,10 +231,54 @@ bool Formula::parseGroup(const std::string& formula, long& beginning,
 double Formula::toAverageMass() const
 {
     // Sum up the averaged atomic weight
-    double mass = 0;
+    int atomNumber, atomCount;
+    double atomMass;
+    double sumMass = 0, sumMass2;
+    double abundance, sumAbundance;
+    std::set<int> processedAtomNumber;
+    std::set<int>::const_iterator k;
     for (auto i=elements.cbegin(); i!=elements.cend(); i++)
-        mass += i->second * AtomMass::averageMass(i->first.first);
-    return mass;
+    {
+        atomNumber = i->first.first;
+        if (processedAtomNumber.find(atomNumber) != processedAtomNumber.cend())
+        {
+            // The element has already been processed; skip it
+            continue;
+        }
+
+        if (defaultIsotope.find(atomNumber)->second)
+            sumMass += i->second * AtomMass::averageMass(atomNumber);
+        else
+        {
+            // Calculate the averaged mass weighted by isotopic abundance
+            sumMass2 = 0;
+            atomCount = 0;
+            sumAbundance = 0;
+            for (auto j=elements.cbegin(); j!=elements.cend(); j++)
+            {
+                if (j->first.first != atomNumber)
+                    continue;
+                atomCount += j->second;
+                if (atomCount <= 0)
+                    continue;
+                atomMass = AtomMass::mass(atomNumber, j->first.second);
+                if (atomMass <= 0)
+                {
+                    // Abundance information not available for this isotope
+                    return -1;
+                }
+
+                abundance = AtomAbundance::relativeAbundance(atomNumber,
+                                                             j->first.second);
+                sumMass2 += abundance * atomMass;
+                sumAbundance += abundance;
+            }
+            if (sumAbundance > 0)
+                sumMass += double(atomCount) * sumMass2 / sumAbundance;
+        }
+        processedAtomNumber.insert(atomNumber);
+    }
+    return sumMass;
 }
 
 double Formula::toMass() const
@@ -138,7 +286,12 @@ double Formula::toMass() const
     // Sum up the atomic weight
     double mass = 0;
     for (auto i=elements.cbegin(); i!=elements.cend(); i++)
-        mass += i->second * AtomMass::monoisotopicMass(i->first.first);
+    {
+        if (defaultIsotope.find(i->first.first)->second)
+            mass += i->second * AtomMass::monoisotopicMass(i->first.first);
+        else
+            mass += i->second * AtomMass::mass(i->first.first, i->first.second);
+    }
     return mass;
 }
 
@@ -157,10 +310,18 @@ std::string Formula::toString() const
     std::ostringstream result;
     for (auto i=elements.cbegin(); i!=elements.cend(); i++)
     {
-        if (i->second == 1.0)
-            result << AtomName::abbreviation(i->first.first);
-        else if (i->second != 0.0)
-            result << AtomName::abbreviation(i->first.first) << i->second;
+        if (i->second != 0.0)
+        {
+            if (defaultIsotope.find(i->first.first)->second)
+                result << AtomName::abbreviation(i->first.first);
+            else
+                result << "["
+                       << std::to_string(i->first.second)
+                       << AtomName::abbreviation(i->first.first)
+                       << "]";
+            if (i->second != 1.0)
+                result << i->second;
+        }
     }
     return result.str();
 }
@@ -182,10 +343,18 @@ Formula::toString(const std::vector<std::string>& elementOrder) const
         }
         if (i != tempElementList.end())
         {
-            if (i->second == 1.0)
-                result << AtomName::abbreviation(i->first.first);
-            else if (i->second != 0.0)
-                result << AtomName::abbreviation(i->first.first) << i->second;
+            if (i->second != 0.0)
+            {
+                if (defaultIsotope.find(i->first.first)->second)
+                    result << AtomName::abbreviation(i->first.first);
+                else
+                    result << "["
+                           << std::to_string(i->first.second)
+                           << AtomName::abbreviation(i->first.first)
+                           << "]";
+                if (i->second != 1.0)
+                    result << i->second;
+            }
             tempElementList.erase(i);
         }
     }
@@ -193,10 +362,18 @@ Formula::toString(const std::vector<std::string>& elementOrder) const
     // Output the rest elements
     for (i=tempElementList.begin(); i!=tempElementList.cend(); i++)
     {
-        if (i->second == 1.0)
-            result << AtomName::abbreviation(i->first.first);
-        else if (i->second != 0.0)
-            result << AtomName::abbreviation(i->first.first) << i->second;
+        if (i->second != 0.0)
+        {
+            if (defaultIsotope.find(i->first.first)->second)
+                result << AtomName::abbreviation(i->first.first);
+            else
+                result << "["
+                       << std::to_string(i->first.second)
+                       << AtomName::abbreviation(i->first.first)
+                       << "]";
+            if (i->second != 1.0)
+                result << i->second;
+        }
     }
     return result.str();
 }
