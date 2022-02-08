@@ -57,9 +57,11 @@ void Formula::setIsotope(int atomNumber, int nominalMass, double count)
         // Isotopoic pattern already set
         // Convert the count of element to the count of default isotope
         double atomCount = ChemicalComposition::countElement(atomNumber);
-        ChemicalComposition::setIsotope(atomNumber,
-                              AtomAbundance::mostAbundantMassNumber(atomNumber),
-                              atomCount);
+        int massNumber = AtomAbundance::mostAbundantMassNumber(atomNumber);
+        if (massNumber != nominalMass)
+            ChemicalComposition::setIsotope(atomNumber, massNumber, atomCount);
+        else
+            count += atomCount;
     }
     ChemicalComposition::setIsotope(atomNumber, nominalMass, count);
 }
