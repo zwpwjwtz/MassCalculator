@@ -9,6 +9,9 @@ public:
     static double mass(int atomNumber, int massNumber);
     static double monoisotopicMass(int atomNumber);
     static double averageMass(int atomNumber);
+
+    static int getAllMassNumbers(int atomNumber,
+                                 int maxCount, int* massNumbers);
 };
 
 #endif // ATOMMASS_H

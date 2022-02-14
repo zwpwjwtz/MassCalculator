@@ -51,7 +51,9 @@ SOURCES += \
     atom/atomic_weight_average.cpp \
     atom/atomic_abundance_isotopic.cpp \
     atom/atomic_abbreviation.cpp \
-    calculator/atomabundance.cpp
+    calculator/atomabundance.cpp \
+    calculator/isotopicpattern.cpp \
+    widget/frameisotopicpatternlist.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -80,7 +82,10 @@ HEADERS += \
     component/formabout.h \
     atom/atomic_weight_isotopic.h \
     atom/atomic_abundance_isotopic.h \
-    calculator/atomabundance.h
+    calculator/atomabundance.h \
+    calculator/isotopicpattern.h \
+    widget/frameisotopicpatternlist.h \
+    calculator/isotopicpattern_p.h
 
 FORMS += \
         mainwindow.ui \
@@ -89,7 +94,8 @@ FORMS += \
     widget/frameformulamodification.ui \
     component/formformulatomass.ui \
     component/formmasstoformula.ui \
-    component/formabout.ui
+    component/formabout.ui \
+    widget/frameisotopicpatternlist.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -112,6 +112,11 @@ void FormFormulaToMass::on_buttonGetMass_clicked()
     }
     ui->textResultFormula->setText(
                 QString::fromStdString(f.toString(MC_FORMULA_ELEMENT_ORDER)));
+
+    ui->frameIsotopicPattern->setMassShift(
+                           ui->frameModification->modification().toMass() -
+                           AtomMass::electronMass() * charge);
+    ui->frameIsotopicPattern->setComposition(f);
 }
 
 void FormFormulaToMass::on_buttonModification_clicked()

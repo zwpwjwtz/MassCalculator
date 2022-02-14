@@ -43,3 +43,23 @@ double AtomMass::averageMass(int atomNumber)
     else
         return 0;
 }
+
+int AtomMass::getAllMassNumbers(int atomNumber, int maxCount, int* massNumbers)
+{
+    if (atomNumber <= 0 || atomNumber > MC_ATOMIC_WEIGHT_ELEMENT_MAX ||
+        maxCount <= 0 || massNumbers == nullptr)
+        return 0;
+    if (maxCount > MC_ATOMIC_WEIGHT_ELEMENT_ISOTOPE_MAX)
+        maxCount = MC_ATOMIC_WEIGHT_ELEMENT_ISOTOPE_MAX;
+
+    int i, massNumber;
+    for (i=0; i<maxCount; i++)
+    {
+        massNumber = int(mc_atommass_isotopic[atomNumber][i][0]);
+        if (massNumber > 0)
+            massNumbers[i] = massNumber;
+        else
+            break;
+    }
+    return i - 1;
+}
