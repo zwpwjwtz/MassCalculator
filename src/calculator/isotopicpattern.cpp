@@ -50,7 +50,7 @@ double IsotopicPattern::binningWidth() const
 
 void IsotopicPattern::setBinningWidth(double width)
 {
-    d_ptr->interval = width > 0 ? width : 0;
+    d_ptr->interval = width > 0 ? width / 2.0 : 0;
 }
 
 int IsotopicPattern::maxBinCount() const
@@ -70,17 +70,15 @@ std::vector<std::pair<double, double>> IsotopicPattern::distribution() const
     // Retrieve the number and the abundance information for all isotopes
     int atomCount;
     std::vector<int> allElements = d_ptr->composition.allElements();
-    std::vector<int> isotopeCount;
-    std::vector<std::pair<double, double>> tempDistribution;
-    std::list<std::vector<std::pair<double, double>>> isotopeList;
+    IsotopicPatternPrivate::IsotopeAbundanceList tempDistribution;
+    IsotopicPatternPrivate::ElementList isotopeList;
     for (auto i=allElements.begin(); i!=allElements.end();)
     {
         atomCount = int(d_ptr->composition.countElement(*i));
         tempDistribution = distribution(*i);
         if (atomCount > 0 && tempDistribution.size() > 0)
         {
-            isotopeCount.push_back(atomCount);
-            isotopeList.push_back(tempDistribution);
+            isotopeList.push_back({atomCount, tempDistribution});
             i++;
         }
         else
@@ -90,16 +88,15 @@ std::vector<std::pair<double, double>> IsotopicPattern::distribution() const
     // Generate a list of possible mass for the given isotope list
     // Each element is dealed in an iteration
     // Each isotope is dealed in a recursive layer
-    int maxMassCount = maxBinCount();
     double atomMass;
+    int maxMassCount = maxBinCount();
     std::list<double> massList, tempMassList;
     std::list<double>::iterator l, m;
     for (auto j=isotopeList.cbegin(); j!=isotopeList.cend(); j++)
     {
-        atomCount = isotopeCount[std::distance(isotopeList.cbegin(), j)];
-        tempMassList = IsotopicPatternPrivate::enumerateIsotopeMass(j->cbegin(),
-                                                                    j->cend(),
-                                                                    atomCount);
+        tempMassList = IsotopicPatternPrivate::enumerateMass(j->second.cbegin(),
+                                                             j->second.cend(),
+                                                             j->first);
         if (tempMassList.size() == 0)
             continue;
         if (massList.size() == 0)
@@ -123,14 +120,23 @@ std::vector<std::pair<double, double>> IsotopicPattern::distribution() const
         // Truncate the mass list if it is oversized
         if (massList.size() > maxMassCount)
         {
+            massList.sort();
             l = massList.begin();
-            std::advance(l, maxBinCount());
+            std::advance(l, maxMassCount);
             massList.erase(l, massList.end());
         }
     }
 
+    // Calculate the convoluted probability at each (binned) mass
+    massList.sort();
+    result.reserve(massList.size());
     for (l=massList.begin(); l!=massList.end(); l++)
-        result.push_back({*l, 0});
+        result.push_back(
+            {*l,
+             IsotopicPatternPrivate::jointProbability(*l, d_ptr->interval,
+                                                      0, massList,
+                                                      isotopeList.cbegin(),
+                                                      isotopeList.cend())});
     return result;
 }
 
@@ -140,8 +146,8 @@ IsotopicPattern::distribution(int atomNumber) const
     int j, maxCount;
     float abundance;
     double atomMass;
+    int massNumbers[MC_ISOTOPIC_ISOTOPE_MAX];
     std::vector<std::pair<double, double>> distribution;
-    int* massNumbers = new int[MC_ISOTOPIC_ISOTOPE_MAX];
     auto allIsotopes = d_ptr->composition.allIsotopes();
     for (auto i=allIsotopes.cbegin(); i!=allIsotopes.cend(); i++)
     {
@@ -165,8 +171,8 @@ IsotopicPattern::distribution(int atomNumber) const
                                                    massNumbers);
             for (j=0; j<maxCount; j++)
             {
-                abundance = AtomAbundance::relativeAbundance(i->first,
-                                                             massNumbers[j]);
+                abundance =
+                    AtomAbundance::relativeAbundance(i->first, massNumbers[j]);
                 if (abundance > 0)
                     distribution.push_back({AtomMass::mass(i->first,
                                                           massNumbers[j]),
@@ -174,37 +180,48 @@ IsotopicPattern::distribution(int atomNumber) const
             }
         }
     }
-    delete[] massNumbers;
+
+    // Normalize the distribution
+    double sum = 0;
+    for (j=0; j<distribution.size(); j++)
+        sum += distribution[j].second;
+    if (sum > 0)
+    {
+        for (j=0; j<distribution.size(); j++)
+            distribution[j].second /= sum;
+    }
 
     return distribution;
 }
 
-std::list<double> IsotopicPatternPrivate::enumerateIsotopeMass(
-            std::vector<std::pair<double, double>>::const_iterator isotope,
-            std::vector<std::pair<double, double>>::const_iterator isotopeEnd,
-            int atomCount)
+unsigned long long IsotopicPatternPrivate::combinatorial(unsigned int N,
+                                                         unsigned int r)
 {
-    double atomMass = isotope->first;
-    std::list<double> massList;
-    massList.push_back(atomCount * atomMass);
-    if (isotope + 1 != isotopeEnd)
+    unsigned d, i;
+    unsigned long long numerator = 1;
+    unsigned long long denominator = 1;
+    static auto limit = std::numeric_limits<unsigned long long>::max();
+
+    if (r < N / 2 - 1)
+        r = N - r;
+    for (i=r+1; i<=N; i++)
     {
-        // Deal with contributions from other isotopes
-        std::list<double> tempMassList;
-        std::list<double>::const_iterator i;
-        for (int c=atomCount - 1; c>=0 ; c--)
+        if (numerator > limit / i)
         {
-            // The total atom count should be the same for each combination
-            tempMassList = enumerateIsotopeMass(isotope + 1, isotopeEnd,
-                                                atomCount - c);
-            for (i=tempMassList.cbegin(); i!=tempMassList.cend(); i++)
-            {
-                // Sum up the atomic weight for each combination
-                massList.push_back(*i + c * atomMass);
-            }
+            // Will overflow; abort the calculation
+            numerator = 0;
+            break;
         }
+        numerator *= i;
     }
-    return massList;
+    if (numerator == 0)
+        return 0;
+
+    d = N - r;
+    for (i=2; i<=d; i++)
+        denominator *= i;
+
+    return numerator / denominator;
 }
 
 void IsotopicPatternPrivate::binMassList(std::list<double>& mass,
@@ -218,9 +235,132 @@ void IsotopicPatternPrivate::binMassList(std::list<double>& mass,
         for (j++; j!=mass.end();)
         {
             if (fabs(*i - *j) < interval)
+            {
+                *i = (*i + *j) / 2;
                 j = mass.erase(j);
+            }
             else
                 j++;
         }
     }
+}
+
+std::list<double>
+IsotopicPatternPrivate::enumerateMass(IsotopeAbundanceIterator isotopeBegin,
+                                      IsotopeAbundanceIterator isotopeEnd,
+                                      int atomCount)
+{
+    double atomMass = isotopeBegin->first;
+    std::list<double> massList;
+    massList.push_back(atomCount * atomMass);
+    if (isotopeBegin + 1 != isotopeEnd)
+    {
+        // Deal with contributions from other isotopes
+        std::list<double> tempMassList;
+        std::list<double>::const_iterator i;
+        for (int c=atomCount - 1; c>=0 ; c--)
+        {
+            // The total atom count should be the same for each combination
+            tempMassList = enumerateMass(isotopeBegin + 1, isotopeEnd,
+                                         atomCount - c);
+            for (i=tempMassList.cbegin(); i!=tempMassList.cend(); i++)
+            {
+                // Sum up the atomic weight for each combination
+                massList.push_back(*i + c * atomMass);
+            }
+        }
+    }
+    return massList;
+}
+
+double
+IsotopicPatternPrivate::jointProbability(
+                                    double mass,
+                                    double tolerance,
+                                    double massShift,
+                                    const std::list<double>& massList,
+                                    const ElementListIterator& elementListBegin,
+                                    const ElementListIterator& elementListEnd)
+{
+    int atomCount = elementListBegin->first;
+    const IsotopeAbundanceList& isotopeList = elementListBegin->second;
+
+    ElementListIterator i = elementListBegin;
+    if (++i == elementListEnd)
+    {
+        // This is the last element to deal (last recursive layer)
+        return marginalProbability(mass, tolerance, atomCount,
+                                   isotopeList.cbegin(), isotopeList.cend());
+    }
+
+    // See if combinations with other isotopes are possible
+    // Before convoluting, we need to shift the mass list to origin by
+    // substracting the minimum isotopic mass in the isotope list
+    double minIsotopicMass = massList.front();
+    for (auto j=isotopeList.cbegin(); j!=isotopeList.cend(); j++)
+    {
+        if (j->first < minIsotopicMass)
+            minIsotopicMass = j->first;
+    }
+    massShift += minIsotopicMass * atomCount;
+
+    double residualMass;
+    double probability = 0, marginal1, marginal2;
+    for (auto m=massList.begin(); m!=massList.end(); m++)
+    {
+        residualMass = *m - massShift;
+        if (mass <= residualMass)
+            continue;
+
+        marginal1 = marginalProbability(mass - residualMass, tolerance,
+                                        atomCount,
+                                        isotopeList.cbegin(),
+                                        isotopeList.cend());
+        if (marginal1 <= 0)
+            continue;
+
+        i = elementListBegin;
+        for (i++; i!=elementListEnd; i++)
+        {
+            marginal2 = jointProbability(residualMass, tolerance,
+                                         massShift, massList,
+                                         i, elementListEnd);
+            if (marginal2 > 0)
+                probability += marginal1 * marginal2;
+        }
+    }
+    return probability;
+}
+
+double IsotopicPatternPrivate::marginalProbability(
+                                    double residualMass,
+                                    double tolerance,
+                                    int atomCount,
+                                    IsotopeAbundanceIterator isotopeBegin,
+                                    const IsotopeAbundanceIterator& isotopeEnd)
+{
+    double probability = 0, marginal;
+    const double& atomMass = isotopeBegin->first;
+    const double& abundance = isotopeBegin->second;
+    if (fabs(residualMass - atomCount * atomMass) <= tolerance)
+        probability += std::pow(abundance, atomCount);
+
+    if (++isotopeBegin != isotopeEnd)
+    {
+        // See if combinations with other isotopes are possible
+        int maxCount = int(ceil(residualMass / atomMass));
+        int c = atomCount > maxCount ? maxCount : atomCount;
+        for (c--; c>=0; c--)
+        {
+            marginal = marginalProbability(residualMass - atomMass * c,
+                                           tolerance,
+                                           atomCount - c,
+                                           isotopeBegin, isotopeEnd);
+            if (marginal > 0)
+                probability += std::pow(abundance, c) * marginal *
+                               combinatorial(atomCount, c);
+
+        }
+    }
+    return probability;
 }

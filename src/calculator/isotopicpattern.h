@@ -9,7 +9,7 @@ class IsotopicPatternPrivate;
 class IsotopicPattern
 {
 public:
-    const double defaultBinningWidth = 1.0;
+    const double defaultBinningWidth = 0.5;
     const int defaultMaxBinCount = 100;
 
     IsotopicPattern();
