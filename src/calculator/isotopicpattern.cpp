@@ -22,7 +22,7 @@ IsotopicPattern::~IsotopicPattern()
     delete d_ptr;
 }
 
-ChemicalComposition IsotopicPattern::composition() const
+const ChemicalComposition& IsotopicPattern::composition() const
 {
     return d_ptr->composition;
 }
@@ -328,6 +328,9 @@ IsotopicPatternPrivate::jointProbability(
             if (marginal2 > 0)
                 probability += marginal1 * marginal2;
         }
+
+        // Cancellable point during calculating
+        pthread_testcancel();
     }
     return probability;
 }

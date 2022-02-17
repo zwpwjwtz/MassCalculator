@@ -53,7 +53,8 @@ SOURCES += \
     atom/atomic_abbreviation.cpp \
     calculator/atomabundance.cpp \
     calculator/isotopicpattern.cpp \
-    widget/frameisotopicpatternlist.cpp
+    widget/frameisotopicpatternlist.cpp \
+    thread/isotopicpatternworker.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -85,7 +86,8 @@ HEADERS += \
     calculator/atomabundance.h \
     calculator/isotopicpattern.h \
     widget/frameisotopicpatternlist.h \
-    calculator/isotopicpattern_p.h
+    calculator/isotopicpattern_p.h \
+    thread/isotopicpatternworker.h
 
 FORMS += \
         mainwindow.ui \

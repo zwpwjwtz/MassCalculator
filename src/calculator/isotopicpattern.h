@@ -15,7 +15,7 @@ public:
     IsotopicPattern();
     ~IsotopicPattern();
 
-    ChemicalComposition composition() const;
+    const ChemicalComposition& composition() const;
     bool setComposition(const ChemicalComposition& composition);
 
     double binningWidth() const;

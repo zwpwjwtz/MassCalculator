@@ -6,6 +6,8 @@
 #include "calculator/chemicalcomposition.h"
 
 
+class IsotopicPatternWorker;
+
 namespace Ui {
 class FrameIsotopicPatternList;
 }
@@ -24,12 +26,19 @@ public:
 
 protected:
     void changeEvent(QEvent* e);
+    void resizeEvent(QResizeEvent* e);
 
 private:
     Ui::FrameIsotopicPatternList *ui;
-    ChemicalComposition currentComposition;
     QStandardItemModel modelList;
+    ChemicalComposition lastComposition;
+    IsotopicPatternWorker* patternGenerator;
+    std::vector<std::pair<double, double>> currentPattern;
     double massShift;
+
+private slots:
+    void on_buttonCancelUpdaing_clicked();
+    void onGeneratorFinished();
 };
 
 #endif // FRAMEISOTOPICPATTERNLIST_H
