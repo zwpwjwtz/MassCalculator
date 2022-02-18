@@ -31,7 +31,6 @@ signals:
 
 protected:
     void changeEvent(QEvent *e);
-    void focusOutEvent(QFocusEvent* e);
 
 private:
     Ui::CompositionSelector *ui;

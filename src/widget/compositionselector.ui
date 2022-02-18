@@ -14,13 +14,10 @@
    <string>Select elements</string>
   </property>
   <property name="frameShape">
-   <enum>QFrame::StyledPanel</enum>
+   <enum>QFrame::Panel</enum>
   </property>
   <property name="frameShadow">
    <enum>QFrame::Raised</enum>
-  </property>
-  <property name="lineWidth">
-   <number>1</number>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -41,10 +38,16 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="buttonOK">
-       <property name="icon">
-        <iconset resource="../resources.qrc">
-         <normaloff>:/icons/dialog-ok-apply.png</normaloff>:/icons/dialog-ok-apply.png</iconset>
+      <widget class="QPushButton" name="buttonAdd">
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonRemove">
+       <property name="text">
+        <string>Remove</string>
        </property>
       </widget>
      </item>
@@ -62,16 +65,13 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonAdd">
+      <widget class="QPushButton" name="buttonOK">
        <property name="text">
-        <string>+</string>
+        <string>OK</string>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonRemove">
-       <property name="text">
-        <string>-</string>
+       <property name="icon">
+        <iconset resource="../resources.qrc">
+         <normaloff>:/icons/dialog-ok-apply.png</normaloff>:/icons/dialog-ok-apply.png</iconset>
        </property>
       </widget>
      </item>

@@ -48,7 +48,10 @@
        </property>
        <property name="icon">
         <iconset resource="../resources.qrc">
-         <normaloff>:/icons/view-more-horizontal.png</normaloff>:/icons/view-more-horizontal.png</iconset>
+         <normaloff>:/icons/electron.png</normaloff>:/icons/electron.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

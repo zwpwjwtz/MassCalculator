@@ -47,6 +47,7 @@ FormMassToFormula::FormMassToFormula(QWidget *parent) :
 
     compositionList = new CompositionSelector(this);
     compositionList->setAutoFillBackground(true);
+    compositionList->setWindowFlag(Qt::WindowType::Popup);
     compositionList->hide();
     connect(compositionList, SIGNAL(finished()),
             this, SLOT(onCompositionSelectorFinished()));
@@ -60,8 +61,6 @@ FormMassToFormula::FormMassToFormula(QWidget *parent) :
             this, SLOT(onFormulaFactoryFinished(bool)));
     connect(formulaFactory, SIGNAL(progressed(double)),
             this, SLOT(onFormulaFactoryProgressed(double)));
-
-    showAllowedElementRanges();
 }
 
 FormMassToFormula::~FormMassToFormula()
@@ -107,6 +106,7 @@ void FormMassToFormula::loadPreferences()
     }
     ui->radioMassToleranceRelative->setChecked(tolerance.relative);
     appConfig.loadCompositionSelector(*compositionList);
+    showAllowedElementRanges();
 }
 
 void FormMassToFormula::savePreferences()
@@ -299,9 +299,10 @@ void FormMassToFormula::on_buttonAllowedElement_clicked()
         onCompositionSelectorFinished();
     else
     {
-        compositionList->move({ui->textAllowedElement->x(),
+        compositionList->move(mapToGlobal(
+                              {ui->textAllowedElement->x(),
                                ui->textAllowedElement->y() +
-                               ui->textAllowedElement->height()});
+                               ui->textAllowedElement->height()}));
         resizeEvent(nullptr);
         compositionList->show();
     }

@@ -28,8 +28,11 @@ FrameIsotopicPatternList::FrameIsotopicPatternList(QWidget* parent) :
 FrameIsotopicPatternList::~FrameIsotopicPatternList()
 {
     delete ui;
-    patternGenerator->terminate();
-    patternGenerator->wait();
+    if (patternGenerator->isRunning())
+    {
+        patternGenerator->terminate();
+        patternGenerator->wait();
+    }
     delete patternGenerator;
 }
 
@@ -47,6 +50,7 @@ void FrameIsotopicPatternList::changeEvent(QEvent* e)
 
 void FrameIsotopicPatternList::resizeEvent(QResizeEvent* e)
 {
+    Q_UNUSED(e)
     int h = height(), w = width();
     ui->tableView->resize(w - 20, h - 20);
     ui->frameUpdating->move(ui->frameUpdating->x(), int(h * 0.3));

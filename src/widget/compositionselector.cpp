@@ -43,11 +43,6 @@ void CompositionSelector::changeEvent(QEvent *e)
     }
 }
 
-void CompositionSelector::focusOutEvent(QFocusEvent *e)
-{
-    hide();
-}
-
 void CompositionSelector::addElement(int atomNumber,
                                      int minCount, int maxCount,
                                      bool enable)

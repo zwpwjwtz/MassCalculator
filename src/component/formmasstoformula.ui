@@ -72,6 +72,9 @@
           <iconset resource="../resources.qrc">
            <normaloff>:/icons/view-more-horizontal.png</normaloff>:/icons/view-more-horizontal.png</iconset>
          </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -167,6 +170,9 @@
           <iconset resource="../resources.qrc">
            <normaloff>:/icons/electron.png</normaloff>:/icons/electron.png</iconset>
          </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -239,23 +245,23 @@
           </item>
          </layout>
         </item>
-        <item>
-         <widget class="FrameFormulaList" name="frameResultFormula">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-         </widget>
-        </item>
        </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="FrameFormulaList" name="frameResultFormula">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
       </widget>
      </item>
     </layout>
