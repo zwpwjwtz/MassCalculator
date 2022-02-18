@@ -23,6 +23,9 @@ public:
     void clear();
     void setComposition(const ChemicalComposition& composition);
     void setMassShift(double delta);
+    void setBinningWidth(double width);
+    void setMaxLength(int maxLength);
+    void setMassPrecision(int digits);
 
 protected:
     void changeEvent(QEvent* e);
@@ -35,6 +38,7 @@ private:
     IsotopicPatternWorker* patternGenerator;
     std::vector<std::pair<double, double>> currentPattern;
     double massShift;
+    int massPrecision;
 
 private slots:
     void on_buttonCancelUpdaing_clicked();

@@ -52,6 +52,11 @@
         <string>Get Formula</string>
        </attribute>
       </widget>
+      <widget class="FrameSettings" name="tabSettings">
+       <attribute name="title">
+        <string>Settings</string>
+       </attribute>
+      </widget>
       <widget class="FormAbout" name="tabAbout">
        <attribute name="title">
         <string>About</string>
@@ -80,6 +85,12 @@
    <class>FormAbout</class>
    <extends>QWidget</extends>
    <header>component/formabout.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FrameSettings</class>
+   <extends>QWidget</extends>
+   <header>component/framesettings.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

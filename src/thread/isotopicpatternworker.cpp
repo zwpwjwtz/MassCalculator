@@ -36,6 +36,16 @@ void IsotopicPatternWorker::run()
     emit finished();
 }
 
+void IsotopicPatternWorker::setBinningWidth(double width)
+{
+    pattern->setBinningWidth(width);
+}
+
+void IsotopicPatternWorker::setMaxLength(int maxLength)
+{
+    pattern->setMaxBinCount(maxLength);
+}
+
 const IsotopicPatternWorker::PatternList& IsotopicPatternWorker::result() const
 {
     return resultList;

@@ -18,6 +18,8 @@ public:
     void clear();
     const ChemicalComposition& composition() const;
     void setComposition(const ChemicalComposition& composition);
+    void setBinningWidth(double width);
+    void setMaxLength(int maxLength);
 
     void run();
 

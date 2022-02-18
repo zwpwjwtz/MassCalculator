@@ -9,14 +9,27 @@
         <translation>选择元素</translation>
     </message>
     <message>
-        <location filename="../widget/compositionselector.ui" line="67"/>
-        <source>+</source>
-        <translation>+</translation>
+        <location filename="../widget/compositionselector.ui" line="43"/>
+        <source>Add</source>
+        <translation>添加</translation>
     </message>
     <message>
-        <location filename="../widget/compositionselector.ui" line="74"/>
+        <location filename="../widget/compositionselector.ui" line="50"/>
+        <source>Remove</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <location filename="../widget/compositionselector.ui" line="70"/>
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <source>+</source>
+        <translation type="vanished">+</translation>
+    </message>
+    <message>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="vanished">-</translation>
     </message>
     <message>
         <location filename="../widget/compositionselector.cpp" line="14"/>
@@ -127,17 +140,17 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
         <translation>选择修饰方式</translation>
     </message>
     <message>
-        <location filename="../component/formformulatomass.ui" line="72"/>
+        <location filename="../component/formformulatomass.ui" line="75"/>
         <source>Monoisotopic mass:</source>
         <translation>单一同位素质量：</translation>
     </message>
     <message>
-        <location filename="../component/formformulatomass.ui" line="90"/>
+        <location filename="../component/formformulatomass.ui" line="93"/>
         <source>Average mass:</source>
         <translation>平均质量：</translation>
     </message>
     <message>
-        <location filename="../component/formformulatomass.ui" line="108"/>
+        <location filename="../component/formformulatomass.ui" line="111"/>
         <source>Emperical formula:</source>
         <translation>经验式：</translation>
     </message>
@@ -152,9 +165,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
         <translation>您输入的分子式格式有误。</translation>
     </message>
     <message>
-        <location filename="../component/formformulatomass.cpp" line="102"/>
         <source>(N/A)</source>
-        <translation>（N/A）</translation>
+        <translation type="vanished">（N/A）</translation>
     </message>
 </context>
 <context>
@@ -170,62 +182,62 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
         <translation>搜索具有指定质量数且满足指定条件的化学式</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="97"/>
+        <location filename="../component/formmasstoformula.ui" line="100"/>
         <source>Import from file:</source>
         <translation>从文件导入：</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="111"/>
+        <location filename="../component/formmasstoformula.ui" line="114"/>
         <source>Import a list of mass from file</source>
         <translation>从文件导入质量数</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="133"/>
+        <location filename="../component/formmasstoformula.ui" line="136"/>
         <source>Allowed elements:</source>
         <translation>包含元素：</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="150"/>
+        <location filename="../component/formmasstoformula.ui" line="153"/>
         <source>Select elements that are possible in the candidate formula</source>
         <translation>选择候选化学式中可以包含的元素</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="164"/>
+        <location filename="../component/formmasstoformula.ui" line="167"/>
         <source>Set modification</source>
         <translation>选择修饰方式</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="180"/>
+        <location filename="../component/formmasstoformula.ui" line="186"/>
         <source>Tolerance</source>
         <translation>允许误差</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="188"/>
+        <location filename="../component/formmasstoformula.ui" line="194"/>
         <source>Lower bound:</source>
         <translation>下限：</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="195"/>
+        <location filename="../component/formmasstoformula.ui" line="201"/>
         <source>The lower (left) limit of the allowed mass difference between input mass and mass of candidate formulae</source>
         <translation>给定质量数与候选分子式的质量之差的下限（最小允许偏差）</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="205"/>
+        <location filename="../component/formmasstoformula.ui" line="211"/>
         <source>Upper bound:</source>
         <translation>上限：</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="212"/>
+        <location filename="../component/formmasstoformula.ui" line="218"/>
         <source>The upper (right) limit of the allowed mass difference between input mass and mass of candidate formulae</source>
         <translation>给定质量数与候选分子式的质量之差的上限（最大允许偏差）</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="226"/>
+        <location filename="../component/formmasstoformula.ui" line="232"/>
         <source>Absol&amp;ute(Da)</source>
         <translation>绝对偏差（Da）</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="236"/>
+        <location filename="../component/formmasstoformula.ui" line="242"/>
         <source>&amp;Relative(ppm)</source>
         <translation>相对偏差（ppm）</translation>
     </message>
@@ -315,29 +327,29 @@ Please wait it to be finished before launch a new one.</source>
     </message>
     <message>
         <location filename="../component/formmasstoformula.cpp" line="279"/>
-        <location filename="../component/formmasstoformula.cpp" line="340"/>
+        <location filename="../component/formmasstoformula.cpp" line="341"/>
         <source>No element specified</source>
         <translation>尚未指定元素</translation>
     </message>
     <message>
         <location filename="../component/formmasstoformula.cpp" line="280"/>
-        <location filename="../component/formmasstoformula.cpp" line="341"/>
+        <location filename="../component/formmasstoformula.cpp" line="342"/>
         <source>Please select at least one element before calculating the possible formula.</source>
         <translation>在计算候选分子式之前，请指定至少一个元素。</translation>
     </message>
     <message>
         <location filename="../component/formmasstoformula.cpp" line="285"/>
-        <location filename="../component/formmasstoformula.cpp" line="346"/>
+        <location filename="../component/formmasstoformula.cpp" line="347"/>
         <source>Calculating formulae...</source>
         <translation>正在搜索分子式……</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="319"/>
+        <location filename="../component/formmasstoformula.cpp" line="320"/>
         <source>Select a source file</source>
         <translation>请选择源文件</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="330"/>
+        <location filename="../component/formmasstoformula.cpp" line="331"/>
         <source>Select a target file</source>
         <translation>请选择目标文件</translation>
     </message>
@@ -350,12 +362,17 @@ Please wait it to be finished before launch a new one.</source>
         <translation>搜索结果</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.ui" line="50"/>
+        <location filename="../widget/frameformulalist.ui" line="44"/>
+        <source>Remove selected formula</source>
+        <translation>删除选定的分子式</translation>
+    </message>
+    <message>
+        <location filename="../widget/frameformulalist.ui" line="66"/>
         <source>Search selected formula online (PubChem)</source>
         <translation>在线查询所选分子式（PubChem）</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.ui" line="61"/>
+        <location filename="../widget/frameformulalist.ui" line="55"/>
         <source>Export query result</source>
         <translation>导出搜索结果</translation>
     </message>
@@ -421,6 +438,102 @@ Only links to the first %2 records will be opened.</source>
     </message>
 </context>
 <context>
+    <name>FrameIsotopicPatternList</name>
+    <message>
+        <location filename="../widget/frameisotopicpatternlist.ui" line="48"/>
+        <source>Calculating isotopic pattern...</source>
+        <translation>正在计算同位素分布……</translation>
+    </message>
+    <message>
+        <location filename="../widget/frameisotopicpatternlist.ui" line="73"/>
+        <source>Cancel</source>
+        <translation>停止计算</translation>
+    </message>
+    <message>
+        <location filename="../widget/frameisotopicpatternlist.cpp" line="46"/>
+        <source>Isotopic Mass</source>
+        <translation>同位素质量</translation>
+    </message>
+    <message>
+        <location filename="../widget/frameisotopicpatternlist.cpp" line="47"/>
+        <source>Normalized Abundance</source>
+        <translation>归一化丰度</translation>
+    </message>
+    <message>
+        <location filename="../widget/frameisotopicpatternlist.cpp" line="48"/>
+        <source>Relative Abundance</source>
+        <translation>相对丰度</translation>
+    </message>
+</context>
+<context>
+    <name>FrameSettings</name>
+    <message>
+        <location filename="../component/framesettings.ui" line="27"/>
+        <source>Numbers</source>
+        <translation>数字格式</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="33"/>
+        <source>Mass precision (digits)</source>
+        <translation>质量数精度（小数位数）</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="72"/>
+        <source>Averaged mass:</source>
+        <translation>平均质量数：</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="109"/>
+        <source>Monoisotopic mass:</source>
+        <translation>单一同位素质量：</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="146"/>
+        <source>Isotopic patterns:</source>
+        <translation>同位素分布：</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="169"/>
+        <source>Isotopic</source>
+        <translation>同位素</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="175"/>
+        <source>Isotopic pattern list</source>
+        <translation>同位素分布列表</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="211"/>
+        <source>Binning width (Da):</source>
+        <translation>合并邻近质量数(Da)：</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="254"/>
+        <source>Max count:</source>
+        <translation>列表长度上限：</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="280"/>
+        <source>Others</source>
+        <translation>其它</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="288"/>
+        <source>Language:</source>
+        <translation>语言：</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="296"/>
+        <source>Chinese</source>
+        <translation>中文</translation>
+    </message>
+    <message>
+        <location filename="../component/framesettings.ui" line="301"/>
+        <source>English</source>
+        <translation>英文</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="14"/>
@@ -433,12 +546,17 @@ Only links to the first %2 records will be opened.</source>
         <translation>计算质量数</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="57"/>
+        <location filename="../mainwindow.ui" line="52"/>
         <source>Get Formula</source>
         <translation>计算化学式</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="67"/>
+        <location filename="../mainwindow.ui" line="57"/>
+        <source>Settings</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="62"/>
         <source>About</source>
         <translation>关于</translation>
     </message>

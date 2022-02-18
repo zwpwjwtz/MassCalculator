@@ -1,16 +1,8 @@
 #include <QSettings>
 #include "config.h"
+#include "config_field.h"
 #include "widget/compositionselector.h"
 #include "widget/frameformulamodification.h"
-
-#define MC_CONFIG_FORMULA_CHARGE        "formula-charge"
-#define MC_CONFIG_FORMULA_MODIFICATION  "formula-modification"
-#define MC_CONFIG_MASS_ELEMENTS         "mass-elements"
-#define MC_CONFIG_MASS_CHARGE           "mass-charge"
-#define MC_CONFIG_MASS_MODIFICATION     "mass-modification"
-#define MC_CONFIG_MASS_TOL_MIN          "mass-tolerance-min"
-#define MC_CONFIG_MASS_TOL_MAX          "mass-tolerance-max"
-#define MC_CONFIG_MASS_TOL_REL          "mass-tolerance-relative"
 
 
 static QSettings mc_config{"MassCalculator", "Desktop"};
@@ -95,4 +87,71 @@ void Config::saveCompositionSelector(const CompositionSelector& widget)
                                    .arg(QString::number(i->maxCount)));
     }
     mc_config.setValue(MC_CONFIG_MASS_ELEMENTS, rangeList);
+}
+
+
+int Config::numberPrecision(PrecisionType type) const
+{
+    QVariant value = mc_config.value(QString("%1-%2")
+                                            .arg(MC_CONFIG_MASS_PRECISION)
+                                            .arg(QString::number(int(type))));
+    if (value.isNull())
+        return 4;
+    else
+        return value.toInt();
+}
+
+void Config::setNumberPrecision(PrecisionType type, int digits)
+{
+    mc_config.setValue(QString("%1-%2")
+                              .arg(MC_CONFIG_MASS_PRECISION)
+                              .arg(int(type)),
+                       digits);
+}
+
+double Config::binningWidth() const
+{
+    QVariant value = mc_config.value(MC_CONFIG_ISOTOPIC_BIN_WIDTH).toDouble();
+    if (value.isNull())
+        return 0.5;
+    else
+        return value.toDouble();
+}
+
+void Config::setBinningWidth(double width)
+{
+    mc_config.setValue(MC_CONFIG_ISOTOPIC_BIN_WIDTH, width);
+}
+
+int Config::maxIsotopicCount() const
+{
+    QVariant value = mc_config.value(MC_CONFIG_ISOTOPIC_BIN_COUNT).toInt();
+    if (value.isNull())
+        return 10;
+    else
+        return value.toInt();
+}
+
+void Config::setMaxIsotopicCount(int count)
+{
+    mc_config.setValue(MC_CONFIG_ISOTOPIC_BIN_COUNT, count);
+}
+
+QString Config::localeName() const
+{
+    QVariant value = mc_config.value(MC_CONFIG_LOCALE_NAME).toString();
+    if (value.isNull())
+        return defaultLocaleName();
+    else
+        return value.toString();
+}
+
+QString Config::defaultLocaleName()
+{
+    return QLocale::system().name();
+}
+
+void Config::setLocaleName(const QString& locale)
+{
+    mc_config.setValue(MC_CONFIG_LOCALE_NAME, locale);
 }

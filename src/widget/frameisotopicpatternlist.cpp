@@ -8,11 +8,8 @@ FrameIsotopicPatternList::FrameIsotopicPatternList(QWidget* parent) :
     ui(new Ui::FrameIsotopicPatternList)
 {
     massShift = 0;
+    massPrecision = 6;
     modelList.setColumnCount(3);
-    modelList.setHorizontalHeaderLabels({"Isotopic Mass",
-                                         "Normalized Intensity",
-                                         "Relative Intensity"});
-
     patternGenerator = new IsotopicPatternWorker(this);
 
     ui->setupUi(this);
@@ -46,6 +43,9 @@ void FrameIsotopicPatternList::changeEvent(QEvent* e)
         default:
             break;
     }
+    modelList.setHorizontalHeaderLabels({tr("Isotopic Mass"),
+                                         tr("Normalized Abundance"),
+                                         tr("Relative Abundance")});
 }
 
 void FrameIsotopicPatternList::resizeEvent(QResizeEvent* e)
@@ -89,6 +89,21 @@ void FrameIsotopicPatternList::setMassShift(double delta)
     massShift = delta;
 }
 
+void FrameIsotopicPatternList::setBinningWidth(double width)
+{
+    patternGenerator->setBinningWidth(width);
+}
+
+void FrameIsotopicPatternList::setMaxLength(int maxLength)
+{
+    patternGenerator->setMaxLength(maxLength);
+}
+
+void FrameIsotopicPatternList::setMassPrecision(int digits)
+{
+    massPrecision = digits > 0 ? digits : 0;
+}
+
 void FrameIsotopicPatternList::on_buttonCancelUpdaing_clicked()
 {
     if (patternGenerator->isRunning())
@@ -126,7 +141,7 @@ void FrameIsotopicPatternList::onGeneratorFinished()
     for (i=0; i<currentPattern.size(); i++)
         modelList.appendRow(
             {new QStandardItem(QString::number(currentPattern[i].first +
-                                               massShift, 'f', 6)),
+                                               massShift, 'f', massPrecision)),
              new QStandardItem(QString::number(currentPattern[i].second)),
              new QStandardItem(QString::number(relativeAbundance[i]))});
 

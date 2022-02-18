@@ -41,7 +41,6 @@ SOURCES += \
     thread/formulageneratorbatchworker.cpp \
     widget/frameformulamodification.cpp \
     calculator/formula_adduct.cpp \
-    config.cpp \
     widget/labeledtext.cpp \
     component/formformulatomass.cpp \
     component/formmasstoformula.cpp \
@@ -54,7 +53,9 @@ SOURCES += \
     calculator/atomabundance.cpp \
     calculator/isotopicpattern.cpp \
     widget/frameisotopicpatternlist.cpp \
-    thread/isotopicpatternworker.cpp
+    thread/isotopicpatternworker.cpp \
+    component/config.cpp \
+    component/framesettings.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -76,7 +77,6 @@ HEADERS += \
     widget/frameformulamodification.h \
     calculator/formula_adduct.h \
     global.h \
-    config.h \
     widget/labeledtext.h \
     component/formformulatomass.h \
     component/formmasstoformula.h \
@@ -87,7 +87,10 @@ HEADERS += \
     calculator/isotopicpattern.h \
     widget/frameisotopicpatternlist.h \
     calculator/isotopicpattern_p.h \
-    thread/isotopicpatternworker.h
+    thread/isotopicpatternworker.h \
+    component/config.h \
+    component/config_field.h \
+    component/framesettings.h
 
 FORMS += \
         mainwindow.ui \
@@ -97,7 +100,8 @@ FORMS += \
     component/formformulatomass.ui \
     component/formmasstoformula.ui \
     component/formabout.ui \
-    widget/frameisotopicpatternlist.ui
+    widget/frameisotopicpatternlist.ui \
+    component/framesettings.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

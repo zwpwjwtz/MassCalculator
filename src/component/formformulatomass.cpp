@@ -91,31 +91,36 @@ void FormFormulaToMass::on_buttonGetMass_clicked()
     }
     f = f + ui->frameModification->modification();
 
+    double averageMass = f.toAverageMass();
+    if (averageMass >= 0)
+        ui->textResultMass->setText(
+              QString::number(averageMass, 'f',
+                              appConfig.numberPrecision(Config::AveragedMass)));
+
     int charge = ui->frameModification->charge();
     if (charge == 0)
     {
-        double averageMass = f.toAverageMass();
-        if (averageMass >= 0)
-            ui->textResultMass->setText(QString::number(averageMass));
-        else
-            ui->textResultMass->setText(tr("(N/A)"));
-        ui->textResultMonoMass->setText(QString::number(f.toMass()));
+        ui->textResultMonoMass->setText(
+              QString::number(f.toMass(), 'f',
+                              appConfig.numberPrecision(Config::IsotopicMass)));
     }
     else
-    {
-        ui->textResultMass->setText(tr("(N/A)"));
         ui->textResultMonoMass->setText(
-                           QString::number((f.toMass() -
-                                            AtomMass::electronMass() * charge) /
-                                           abs(charge),
-                                           'f', 6));
-    }
+              QString::number((f.toMass() -
+                               AtomMass::electronMass() * charge) / abs(charge),
+                              'f',
+                              appConfig.numberPrecision(Config::IsotopicMass)));
+
     ui->textResultFormula->setText(
                 QString::fromStdString(f.toString(MC_FORMULA_ELEMENT_ORDER)));
 
+    ui->frameIsotopicPattern->setBinningWidth(appConfig.binningWidth());
+    ui->frameIsotopicPattern->setMaxLength(appConfig.maxIsotopicCount());
     ui->frameIsotopicPattern->setMassShift(
                            ui->frameModification->modification().toMass() -
                            AtomMass::electronMass() * charge);
+    ui->frameIsotopicPattern->setMassPrecision(
+                        appConfig.numberPrecision(Config::IsotopicPatternMass));
     ui->frameIsotopicPattern->setComposition(f);
 }
 
