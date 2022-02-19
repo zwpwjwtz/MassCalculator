@@ -385,7 +385,10 @@
         <bool>true</bool>
        </property>
        <property name="text">
-        <string/>
+        <string>Open the &lt;a href=\&quot;#\&quot;&gt;result&lt;/a&gt;&amp;nbsp;&amp;nbsp;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>

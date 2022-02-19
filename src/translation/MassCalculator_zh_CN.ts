@@ -24,14 +24,6 @@
         <translation>确定</translation>
     </message>
     <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
         <location filename="../widget/compositionselector.cpp" line="14"/>
         <source>Element</source>
         <translation>元素</translation>
@@ -164,10 +156,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
         <source>The formula that you input is incorrect.</source>
         <translation>您输入的分子式格式有误。</translation>
     </message>
-    <message>
-        <source>(N/A)</source>
-        <translation type="vanished">（N/A）</translation>
-    </message>
 </context>
 <context>
     <name>FormMassToFormula</name>
@@ -242,114 +230,114 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
         <translation>相对偏差（ppm）</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="41"/>
-        <source>Open the &lt;a href=&quot;#&quot;&gt;result&lt;/a&gt;&amp;nbsp;&amp;nbsp;</source>
+        <location filename="../component/formmasstoformula.ui" line="388"/>
+        <source>Open the &lt;a href=\&quot;#\&quot;&gt;result&lt;/a&gt;&amp;nbsp;&amp;nbsp;</source>
         <translation>打开&lt;a href=&quot;#&quot;&gt;结果文件&lt;/a&gt;&amp;nbsp;&amp;nbsp;</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="175"/>
+        <location filename="../component/formmasstoformula.cpp" line="174"/>
         <source>No result found.</source>
         <translation>找不到匹配的化学式。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="180"/>
+        <location filename="../component/formmasstoformula.cpp" line="179"/>
         <source>Loading %1 results, please wait...</source>
         <translation>正在载入%1个结果，请稍后……</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="185"/>
+        <location filename="../component/formmasstoformula.cpp" line="184"/>
         <source>%1 result(s) found.</source>
         <translation>找到%1个结果。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="196"/>
+        <location filename="../component/formmasstoformula.cpp" line="195"/>
         <source>Calculation finished</source>
         <translation>计算已完成</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="197"/>
+        <location filename="../component/formmasstoformula.cpp" line="196"/>
         <source>Finished importing mass list from file and calculating formula. 
 %1 mass were processed in total.</source>
         <translation>数据导入和计算已完成，共计算了%1个质量数。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="201"/>
+        <location filename="../component/formmasstoformula.cpp" line="200"/>
         <source>Calculation finished.</source>
         <translation>计算已完成。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="206"/>
+        <location filename="../component/formmasstoformula.cpp" line="205"/>
         <source>Calculation failed</source>
         <translation>计算失败</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="207"/>
+        <location filename="../component/formmasstoformula.cpp" line="206"/>
         <source>Something went wrong during the calculation.
 Please check your input file and try again.</source>
         <translation>计算时出现未知错误。请检查您的输入文件，然后重试。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="209"/>
+        <location filename="../component/formmasstoformula.cpp" line="208"/>
         <source>Calculation failed.</source>
         <translation>计算失败。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="234"/>
+        <location filename="../component/formmasstoformula.cpp" line="233"/>
         <source>Ongoing calculation</source>
         <translation>计算进行中</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="235"/>
+        <location filename="../component/formmasstoformula.cpp" line="234"/>
         <source>A calculation task is still being processed.
 Please wait it to be finished before launch a new one.</source>
         <translation>当前已有计算任务在运行。
 请等待它结束后再执行新的计算任务。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="245"/>
+        <location filename="../component/formmasstoformula.cpp" line="244"/>
         <source>Non-positive mass provided</source>
         <translation>质量数不能为非负数</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="246"/>
+        <location filename="../component/formmasstoformula.cpp" line="245"/>
         <source>The mass should be greater than 0</source>
         <translation>质量数应当大于0</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="259"/>
+        <location filename="../component/formmasstoformula.cpp" line="258"/>
         <source>Non-positive mass requested</source>
         <translation>质量数不能为非负数</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="260"/>
+        <location filename="../component/formmasstoformula.cpp" line="259"/>
         <source>The input mass minus the mass of modification (%1) should be greater than 0</source>
         <translation>您输入的质量数减去修饰质量数（%1）后应当大于0</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="279"/>
-        <location filename="../component/formmasstoformula.cpp" line="341"/>
+        <location filename="../component/formmasstoformula.cpp" line="278"/>
+        <location filename="../component/formmasstoformula.cpp" line="340"/>
         <source>No element specified</source>
         <translation>尚未指定元素</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="280"/>
-        <location filename="../component/formmasstoformula.cpp" line="342"/>
+        <location filename="../component/formmasstoformula.cpp" line="279"/>
+        <location filename="../component/formmasstoformula.cpp" line="341"/>
         <source>Please select at least one element before calculating the possible formula.</source>
         <translation>在计算候选分子式之前，请指定至少一个元素。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="285"/>
-        <location filename="../component/formmasstoformula.cpp" line="347"/>
+        <location filename="../component/formmasstoformula.cpp" line="284"/>
+        <location filename="../component/formmasstoformula.cpp" line="346"/>
         <source>Calculating formulae...</source>
         <translation>正在搜索分子式……</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="320"/>
+        <location filename="../component/formmasstoformula.cpp" line="319"/>
         <source>Select a source file</source>
         <translation>请选择源文件</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="331"/>
+        <location filename="../component/formmasstoformula.cpp" line="330"/>
         <source>Select a target file</source>
         <translation>请选择目标文件</translation>
     </message>
@@ -521,16 +509,6 @@ Only links to the first %2 records will be opened.</source>
         <location filename="../component/framesettings.ui" line="288"/>
         <source>Language:</source>
         <translation>语言：</translation>
-    </message>
-    <message>
-        <location filename="../component/framesettings.ui" line="296"/>
-        <source>Chinese</source>
-        <translation>中文</translation>
-    </message>
-    <message>
-        <location filename="../component/framesettings.ui" line="301"/>
-        <source>English</source>
-        <translation>英文</translation>
     </message>
 </context>
 <context>

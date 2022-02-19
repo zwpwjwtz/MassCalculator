@@ -48,19 +48,19 @@ void FrameSettings::loadSettings()
     ui->spinMaxIsotopicCount->setValue(appConfig.maxIsotopicCount());
 
     // Load the language table
+    int i;
     QString localeName(appConfig.localeName());
-    for (int i=0; i<ui->comboLanguage->count(); i++)
+    for (i=0; i<ui->comboLanguage->count(); i++)
     {
         if (ui->comboLanguage->itemData(i).toString() == localeName)
-        {
-            ui->comboLanguage->setCurrentIndex(i);
-
-            // Manually trigger the locale change is needed
-            // during initialization
-            on_comboLanguage_currentIndexChanged(i);
             break;
-        }
     }
+    if (i >= ui->comboLanguage->count())
+        i = 0;
+    ui->comboLanguage->setCurrentIndex(i);
+
+    // Manually trigger the locale change is needed during the initialization
+    on_comboLanguage_currentIndexChanged(i);
 }
 
 void FrameSettings::on_comboLanguage_currentIndexChanged(int index)

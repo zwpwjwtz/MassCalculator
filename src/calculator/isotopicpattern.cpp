@@ -1,6 +1,9 @@
 #include <cmath>
 #include <limits>
 #include <list>
+#ifndef Q_OS_WIN32
+#include <pthread.h>
+#endif
 #include "isotopicpattern.h"
 #include "isotopicpattern_p.h"
 #include "atommass.h"

@@ -58,6 +58,9 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
             case Qt::Key::Key_3:
                 ui->tabWidget->setCurrentIndex(2);
                 break;
+            case Qt::Key::Key_4:
+                ui->tabWidget->setCurrentIndex(3);
+                break;
             default:;
         }
         e->accept();

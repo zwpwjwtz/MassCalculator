@@ -38,7 +38,6 @@ FormMassToFormula::FormMassToFormula(QWidget *parent) :
 
     ui->labelFileLink->setVisible(false);
     ui->labelFileLink->setTextFormat(Qt::TextFormat::RichText);
-    ui->labelFileLink->setText(tr("Open the <a href=\"#\">result</a>&nbsp;&nbsp;"));
     connect(ui->labelFileLink, SIGNAL(linkActivated(const QString&)),
             this, SLOT(onLabelFileLinkClicked()));
 
@@ -47,7 +46,7 @@ FormMassToFormula::FormMassToFormula(QWidget *parent) :
 
     compositionList = new CompositionSelector(this);
     compositionList->setAutoFillBackground(true);
-    compositionList->setWindowFlag(Qt::WindowType::Popup);
+    compositionList->setWindowFlags(Qt::WindowType::Popup);
     compositionList->hide();
     connect(compositionList, SIGNAL(finished()),
             this, SLOT(onCompositionSelectorFinished()));

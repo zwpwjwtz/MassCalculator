@@ -43,8 +43,14 @@ void Config::saveMassModification(const FrameFormulaModification& widget)
 
 MassTolerance Config::massTolerance() const
 {
-    MassTolerance tolerance{mc_config.value(MC_CONFIG_MASS_TOL_MIN).toDouble(),
-                            mc_config.value(MC_CONFIG_MASS_TOL_MAX).toDouble(),
+    QVariant toleranceMin = mc_config.value(MC_CONFIG_MASS_TOL_MIN);
+    QVariant toleranceMax = mc_config.value(MC_CONFIG_MASS_TOL_MAX);
+    if (toleranceMin.isNull())
+        toleranceMin.setValue(-0.05);
+    if (toleranceMax.isNull())
+        toleranceMax.setValue(0.05);
+    MassTolerance tolerance{toleranceMin.toDouble(),
+                            toleranceMax.toDouble(),
                             mc_config.value(MC_CONFIG_MASS_TOL_REL).toBool()};
     return tolerance;
 }
@@ -111,7 +117,7 @@ void Config::setNumberPrecision(PrecisionType type, int digits)
 
 double Config::binningWidth() const
 {
-    QVariant value = mc_config.value(MC_CONFIG_ISOTOPIC_BIN_WIDTH).toDouble();
+    QVariant value = mc_config.value(MC_CONFIG_ISOTOPIC_BIN_WIDTH);
     if (value.isNull())
         return 0.5;
     else
@@ -125,7 +131,7 @@ void Config::setBinningWidth(double width)
 
 int Config::maxIsotopicCount() const
 {
-    QVariant value = mc_config.value(MC_CONFIG_ISOTOPIC_BIN_COUNT).toInt();
+    QVariant value = mc_config.value(MC_CONFIG_ISOTOPIC_BIN_COUNT);
     if (value.isNull())
         return 10;
     else
@@ -139,7 +145,7 @@ void Config::setMaxIsotopicCount(int count)
 
 QString Config::localeName() const
 {
-    QVariant value = mc_config.value(MC_CONFIG_LOCALE_NAME).toString();
+    QVariant value = mc_config.value(MC_CONFIG_LOCALE_NAME);
     if (value.isNull())
         return defaultLocaleName();
     else

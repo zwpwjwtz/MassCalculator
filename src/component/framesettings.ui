@@ -293,12 +293,12 @@
           <widget class="QComboBox" name="comboLanguage">
            <item>
             <property name="text">
-             <string>Chinese</string>
+             <string notr="true">中文</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>English</string>
+             <string notr="true">English</string>
             </property>
            </item>
           </widget>
