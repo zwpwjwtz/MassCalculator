@@ -136,7 +136,7 @@ bool Formula::parseGroup(const std::string& formula, long& beginning,
             atomCountSpecified = false;
             isotope = false;
         }
-        else if ((c >= '0' && c <= '9') || c == '+' || c == '-')
+        else if ((c >= '0' && c <= '9') || c == '+' || c == '-' || c =='.')
         {
             // Reading a number
             if (nameBuffer.length() > 0)
@@ -158,8 +158,12 @@ bool Formula::parseGroup(const std::string& formula, long& beginning,
                 atomCount = strtol(reversedNumberBuffer.c_str(), &p, 10);
                 if (*p != '\0')
                 {
-                    // Invalid subscript
-                    errorFlag = true;
+                    atomCount = strtod(reversedNumberBuffer.c_str(), &p);
+                    if (*p != '\0')
+                    {
+                        // Invalid subscript
+                        errorFlag = true;
+                    }
                 }
                 atomCountSpecified = true;
                 numberBuffer.clear();
