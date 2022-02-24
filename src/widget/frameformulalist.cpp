@@ -2,12 +2,16 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QStandardItemModel>
-#include <QSortFilterProxyModel>
 #include <QUrl>
 #include "frameformulalist.h"
 #include "ui_frameformulalist.h"
+#include "calculator/valence.h"
+#include "formulalistproxymodel.h"
+#include "dialogformulalistfilter.h"
 
 #define MC_FORMULA_ELEMENT_ORDER   {"C"}
+
+#define MC_FORMULA_LIST_COLUMN_DU  4
 
 #define MC_FORMULA_OPENLINK_MAX    10
 
@@ -24,8 +28,9 @@ FrameFormulaList::FrameFormulaList(QWidget *parent) :
     ui->setupUi(this);
 
     resultLoaded = false;
+    dialogFilter = nullptr;
     modelResult = new QStandardItemModel(this);
-    modelResultProxy = new QSortFilterProxyModel(this);
+    modelResultProxy = new FormulaListProxyModel(this);
     modelResultProxy->setSourceModel(modelResult);
     ui->viewSearchResult->setModel(modelResultProxy);
     ui->viewSearchResult->horizontalHeader()
@@ -39,7 +44,11 @@ FrameFormulaList::FrameFormulaList(QWidget *parent) :
 
 FrameFormulaList::~FrameFormulaList()
 {
+    if (dialogFilter)
+        delete dialogFilter;
     delete ui;
+    delete modelResultProxy;
+    delete modelResult;
 }
 
 void FrameFormulaList::changeEvent(QEvent *e)
@@ -87,9 +96,9 @@ void FrameFormulaList::loadResult(const std::list<Formula>& formulaList,
             massDiff = expectedMass - formulaMass;
             newRow << new QStandardItem(QString::number(massDiff))
                    << new QStandardItem(
-                              QString::number(massDiff / expectedMass  * 1E6));
-            newRow[2]->setData(massDiff, Qt::DisplayRole);
-            newRow[3]->setData(massDiff / expectedMass  * 1E6, Qt::DisplayRole);
+                              QString::number(massDiff / expectedMass  * 1E6))
+                   << new QStandardItem(
+                              QString::number(Valence::doubleBondIndex(*j)));
         }
         modelResult->appendRow(newRow);
         newRow.clear();
@@ -128,9 +137,17 @@ void FrameFormulaList::setColumnHeader(int columnCount)
     modelResult->setHorizontalHeaderLabels({tr("Formula"),
                                             tr("Mono.Mass"),
                                             tr("Difference(Da)"),
-                                            tr("Difference(ppm)")});
+                                            tr("Difference(ppm)"),
+                                            tr("Unsaturation Degree")});
     ui->viewSearchResult->horizontalHeader()
                         ->setSectionResizeMode(QHeaderView::Interactive);
+}
+
+void FrameFormulaList::setFilterState(bool activated)
+{
+    ui->buttonFilter->setIcon(activated ?
+                              QIcon(":/icons/view-filter-activated.png") :
+                              QIcon(":/icons/view-filter.png"));
 }
 
 void FrameFormulaList::onViewHeaderSearchResultClicked(int columnIndex)
@@ -254,4 +271,24 @@ void FrameFormulaList::on_buttonRemove_clicked()
 
     for (int i = selectedIndexes.count() - 1; i >= 0; i--)
         modelResultProxy->removeRow(selectedIndexes[i].row());
+}
+
+void FrameFormulaList::on_buttonFilter_clicked()
+{
+    if (!dialogFilter)
+        dialogFilter = new DialogFormulaListFilter(this);
+    dialogFilter->exec();
+
+    setFilterState(dialogFilter->isActivated());
+    if (dialogFilter->filterSaturationDegree())
+    {
+        modelResultProxy->setRangeFilter(MC_FORMULA_LIST_COLUMN_DU,
+                                dialogFilter->saturationDegreeMin(),
+                                dialogFilter->saturationDegreeMax());
+        modelResultProxy->setRangeFilterActivated(MC_FORMULA_LIST_COLUMN_DU,
+                                                  true);
+    }
+    else
+        modelResultProxy->setRangeFilterActivated(MC_FORMULA_LIST_COLUMN_DU,
+                                                  false);
 }

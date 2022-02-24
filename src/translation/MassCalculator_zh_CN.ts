@@ -24,22 +24,22 @@
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../widget/compositionselector.cpp" line="14"/>
+        <location filename="../widget/compositionselector.cpp" line="36"/>
         <source>Element</source>
         <translation>元素</translation>
     </message>
     <message>
-        <location filename="../widget/compositionselector.cpp" line="15"/>
+        <location filename="../widget/compositionselector.cpp" line="37"/>
         <source>Min</source>
         <translation>最少</translation>
     </message>
     <message>
-        <location filename="../widget/compositionselector.cpp" line="16"/>
+        <location filename="../widget/compositionselector.cpp" line="38"/>
         <source>Max</source>
         <translation>最多</translation>
     </message>
     <message>
-        <location filename="../widget/compositionselector.cpp" line="17"/>
+        <location filename="../widget/compositionselector.cpp" line="39"/>
         <source>Enabled</source>
         <translation>启用</translation>
     </message>
@@ -55,6 +55,34 @@
         <location filename="../widget/compositionselectordelegate.cpp" line="55"/>
         <source>The name that you input does not represent any element. Please check and try again.</source>
         <translation>您输入的字符无法匹配任何元素。请检查后重试。</translation>
+    </message>
+</context>
+<context>
+    <name>DialogFormulaListFilter</name>
+    <message>
+        <location filename="../widget/dialogformulalistfilter.ui" line="20"/>
+        <source>Set filters</source>
+        <translation>设置筛选条件</translation>
+    </message>
+    <message>
+        <location filename="../widget/dialogformulalistfilter.ui" line="29"/>
+        <source>Filter results by:</source>
+        <translation>按以下条件筛选分子式：</translation>
+    </message>
+    <message>
+        <location filename="../widget/dialogformulalistfilter.ui" line="54"/>
+        <source>Unsaturation degree</source>
+        <translation>不饱和度</translation>
+    </message>
+    <message>
+        <location filename="../widget/dialogformulalistfilter.ui" line="82"/>
+        <source>From</source>
+        <translation>最低</translation>
+    </message>
+    <message>
+        <location filename="../widget/dialogformulalistfilter.ui" line="122"/>
+        <source>To</source>
+        <translation>最高</translation>
     </message>
 </context>
 <context>
@@ -351,63 +379,73 @@ Please wait it to be finished before launch a new one.</source>
     </message>
     <message>
         <location filename="../widget/frameformulalist.ui" line="44"/>
+        <source>Filter the list</source>
+        <translation>列表筛选</translation>
+    </message>
+    <message>
+        <location filename="../widget/frameformulalist.ui" line="55"/>
         <source>Remove selected formula</source>
         <translation>删除选定的分子式</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.ui" line="66"/>
+        <location filename="../widget/frameformulalist.ui" line="77"/>
         <source>Search selected formula online (PubChem)</source>
         <translation>在线查询所选分子式（PubChem）</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.ui" line="55"/>
+        <location filename="../widget/frameformulalist.ui" line="66"/>
         <source>Export query result</source>
         <translation>导出搜索结果</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.cpp" line="128"/>
+        <location filename="../widget/frameformulalist.cpp" line="137"/>
         <source>Formula</source>
         <translation>分子式</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.cpp" line="129"/>
+        <location filename="../widget/frameformulalist.cpp" line="138"/>
         <source>Mono.Mass</source>
         <translation>单一同位素质量</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.cpp" line="130"/>
+        <location filename="../widget/frameformulalist.cpp" line="139"/>
         <source>Difference(Da)</source>
         <translation>偏差（Da）</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.cpp" line="131"/>
+        <location filename="../widget/frameformulalist.cpp" line="140"/>
         <source>Difference(ppm)</source>
         <translation>偏差（ppm）</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.cpp" line="173"/>
+        <location filename="../widget/frameformulalist.cpp" line="141"/>
+        <source>Unsaturation Degree</source>
+        <translation>不饱和度</translation>
+    </message>
+    <message>
+        <location filename="../widget/frameformulalist.cpp" line="190"/>
         <source>Too many records selected</source>
         <translation>选择的行数过多</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.cpp" line="174"/>
+        <location filename="../widget/frameformulalist.cpp" line="191"/>
         <source>You have selected %1 records.
 Only links to the first %2 records will be opened.</source>
         <translation>您选择了%1行结果。
 为了避免卡顿，程序只会打开前%2个结果。</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.cpp" line="200"/>
+        <location filename="../widget/frameformulalist.cpp" line="217"/>
         <source>Save query result as CSV file</source>
         <translation>保存搜索结果为CSV文件</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.cpp" line="211"/>
+        <location filename="../widget/frameformulalist.cpp" line="228"/>
         <source>Failed writing to file</source>
         <translation>写入文件失败</translation>
     </message>
     <message>
-        <location filename="../widget/frameformulalist.cpp" line="212"/>
+        <location filename="../widget/frameformulalist.cpp" line="229"/>
         <source>Failed opening file %1 to write.</source>
         <translation>无法打开文件%1以写入内容。</translation>
     </message>
@@ -438,17 +476,17 @@ Only links to the first %2 records will be opened.</source>
         <translation>停止计算</translation>
     </message>
     <message>
-        <location filename="../widget/frameisotopicpatternlist.cpp" line="46"/>
+        <location filename="../widget/frameisotopicpatternlist.cpp" line="42"/>
         <source>Isotopic Mass</source>
         <translation>同位素质量</translation>
     </message>
     <message>
-        <location filename="../widget/frameisotopicpatternlist.cpp" line="47"/>
+        <location filename="../widget/frameisotopicpatternlist.cpp" line="43"/>
         <source>Normalized Abundance</source>
         <translation>归一化丰度</translation>
     </message>
     <message>
-        <location filename="../widget/frameisotopicpatternlist.cpp" line="48"/>
+        <location filename="../widget/frameisotopicpatternlist.cpp" line="44"/>
         <source>Relative Abundance</source>
         <translation>相对丰度</translation>
     </message>

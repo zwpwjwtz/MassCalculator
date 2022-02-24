@@ -11,10 +11,6 @@ CompositionSelector::CompositionSelector(QWidget *parent) :
 {
     // Set table layout
     modelElement.setColumnCount(4);
-    modelElement.setHorizontalHeaderItem(0, new QStandardItem(tr("Element")));
-    modelElement.setHorizontalHeaderItem(1, new QStandardItem(tr("Min")));
-    modelElement.setHorizontalHeaderItem(2, new QStandardItem(tr("Max")));
-    modelElement.setHorizontalHeaderItem(3, new QStandardItem(tr("Enabled")));
 
     // Add default elements
     addElement(6, 1, 5);
@@ -37,6 +33,10 @@ void CompositionSelector::changeEvent(QEvent *e)
     switch (e->type()) {
         case QEvent::LanguageChange:
             ui->retranslateUi(this);
+            modelElement.setHorizontalHeaderLabels({tr("Element"),
+                                                    tr("Min"),
+                                                    tr("Max"),
+                                                    tr("Enabled")});
             break;
         default:
             break;

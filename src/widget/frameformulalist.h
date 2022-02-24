@@ -6,7 +6,8 @@
 
 
 class QStandardItemModel;
-class QSortFilterProxyModel;
+class FormulaListProxyModel;
+class DialogFormulaListFilter;
 
 namespace Ui {
 class FrameFormulaList;
@@ -37,7 +38,8 @@ signals:
 private:
     Ui::FrameFormulaList *ui;
     QStandardItemModel* modelResult;
-    QSortFilterProxyModel* modelResultProxy;
+    FormulaListProxyModel* modelResultProxy;
+    DialogFormulaListFilter* dialogFilter;
 
     bool resultLoaded;
     QString lastSavePath;
@@ -48,12 +50,14 @@ private:
     void saveColumnWidth();
     void restoreColumnWidth();
     void setColumnHeader(int columnCount);
+    void setFilterState(bool activated);
 
 private slots:
     void onViewHeaderSearchResultClicked(int columnIndex);
     void on_buttonOpenLink_clicked();
     void on_buttonSave_clicked();
     void on_buttonRemove_clicked();
+    void on_buttonFilter_clicked();
 };
 
 #endif // FRAMEFORMULALIST_H

@@ -39,13 +39,13 @@ void FrameIsotopicPatternList::changeEvent(QEvent* e)
     switch (e->type()) {
         case QEvent::LanguageChange:
             ui->retranslateUi(this);
+            modelList.setHorizontalHeaderLabels({tr("Isotopic Mass"),
+                                                 tr("Normalized Abundance"),
+                                                 tr("Relative Abundance")});
             break;
         default:
             break;
     }
-    modelList.setHorizontalHeaderLabels({tr("Isotopic Mass"),
-                                         tr("Normalized Abundance"),
-                                         tr("Relative Abundance")});
 }
 
 void FrameIsotopicPatternList::resizeEvent(QResizeEvent* e)

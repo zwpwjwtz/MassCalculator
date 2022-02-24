@@ -11,5 +11,7 @@
         <file>icons/electron.png</file>
         <file>translation/MassCalculator_zh_CN.qm</file>
         <file>icons/delete.png</file>
+        <file>icons/view-filter.png</file>
+        <file>icons/view-filter-activated.png</file>
     </qresource>
 </RCC>

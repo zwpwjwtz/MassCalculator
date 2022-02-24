@@ -39,6 +39,17 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
+      <widget class="QPushButton" name="buttonFilter">
+       <property name="toolTip">
+        <string>Filter the list</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources.qrc">
+         <normaloff>:/icons/view-filter.png</normaloff>:/icons/view-filter.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="buttonRemove">
        <property name="toolTip">
         <string>Remove selected formula</string>

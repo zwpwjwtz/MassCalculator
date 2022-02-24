@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MassCalculator
 TEMPLATE = app
 
-VERSION = 2.0.0
+VERSION = 2.0.1
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -55,7 +55,12 @@ SOURCES += \
     widget/frameisotopicpatternlist.cpp \
     thread/isotopicpatternworker.cpp \
     component/config.cpp \
-    component/framesettings.cpp
+    component/framesettings.cpp \
+    atom/atomic_valence.cpp \
+    calculator/atomvalence.cpp \
+    calculator/valence.cpp \
+    widget/dialogformulalistfilter.cpp \
+    widget/formulalistproxymodel.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -90,7 +95,12 @@ HEADERS += \
     thread/isotopicpatternworker.h \
     component/config.h \
     component/config_field.h \
-    component/framesettings.h
+    component/framesettings.h \
+    atom/atomic_valence.h \
+    calculator/atomvalence.h \
+    calculator/valence.h \
+    widget/dialogformulalistfilter.h \
+    widget/formulalistproxymodel.h
 
 FORMS += \
         mainwindow.ui \
@@ -101,7 +111,8 @@ FORMS += \
     component/formmasstoformula.ui \
     component/formabout.ui \
     widget/frameisotopicpatternlist.ui \
-    component/framesettings.ui
+    component/framesettings.ui \
+    widget/dialogformulalistfilter.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -110,6 +121,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+RC_ICONS = icons/MassCalculator.ico
 
 TRANSLATIONS += \
     translation/MassCalculator_zh_CN.ts
