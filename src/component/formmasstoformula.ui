@@ -138,9 +138,12 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="textAllowedElement">
-         <property name="readOnly">
-          <bool>true</bool>
+        <widget class="CompositionTemplateList" name="comboAllowedElement">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
         </widget>
        </item>
@@ -423,6 +426,11 @@
    <class>LabeledText</class>
    <extends>QLineEdit</extends>
    <header>widget/labeledtext.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CompositionTemplateList</class>
+   <extends>QComboBox</extends>
+   <header>widget/compositiontemplatelist.h</header>
   </customwidget>
  </customwidgets>
  <resources>

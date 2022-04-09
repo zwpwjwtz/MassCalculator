@@ -40,7 +40,6 @@ private:
     QString lastImportFilePath, lastExportFilePath;
     QString lastImportFileFilter, lastExportFileFilter;
 
-    void showAllowedElementRanges();
     void setInputWidgetEnabled(bool enabled = true);
 
 private slots:
@@ -57,6 +56,7 @@ private slots:
     void on_buttonImportMassFromFile_clicked();
     void on_buttonShowImportMassFromFile_clicked();
     void on_buttonShowMassModification_clicked();
+    void on_comboAllowedElement_activated(int index);
 };
 
 #endif // FORMMASSTOFORMULA_H

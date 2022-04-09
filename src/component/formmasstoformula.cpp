@@ -7,7 +7,6 @@
 #include "ui_formmasstoformula.h"
 #include "global.h"
 #include "config.h"
-#include "calculator/atomname.h"
 #include "calculator/atommass.h"
 #include "thread/formulageneratorworker.h"
 #include "thread/formulageneratorbatchworker.h"
@@ -82,7 +81,7 @@ void FormMassToFormula::changeEvent(QEvent* e)
 void FormMassToFormula::resizeEvent(QResizeEvent* e)
 {
     Q_UNUSED(e)
-    compositionList->resize(ui->textAllowedElement->width() +
+    compositionList->resize(ui->comboAllowedElement->width() +
                             ui->buttonAllowedElement->width(),
                             compositionList->height());
 }
@@ -104,8 +103,11 @@ void FormMassToFormula::loadPreferences()
         ui->textMassToleranceRight->setText(QString::number(tolerance.max));
     }
     ui->radioMassToleranceRelative->setChecked(tolerance.relative);
+    appConfig.loadCompositionTemplates(*(ui->comboAllowedElement));
     appConfig.loadCompositionSelector(*compositionList);
-    showAllowedElementRanges();
+    ui->comboAllowedElement->setCurrentComposition(
+                                        compositionList->getElementRanges(),
+                                        compositionList->getRemark());
 }
 
 void FormMassToFormula::savePreferences()
@@ -115,22 +117,8 @@ void FormMassToFormula::savePreferences()
     appConfig.setMassTolerance({ui->textMassToleranceLeft->text().toDouble(),
                                 ui->textMassToleranceRight->text().toDouble(),
                                 ui->radioMassToleranceRelative->isChecked()});
+    appConfig.saveCompositionTemplates(*(ui->comboAllowedElement));
     appConfig.saveCompositionSelector(*compositionList);
-}
-
-void FormMassToFormula::showAllowedElementRanges()
-{
-    QString displayedRanges;
-    auto rangeList = compositionList->getElementRanges();
-    for (auto i=rangeList.cbegin(); i!=rangeList.cend(); i++)
-    {
-        displayedRanges.append(
-            QString("%1%2-%3 ").arg(QString::fromStdString(
-                                       AtomName::abbreviation(i->atomNumber)),
-                                   QString::number(i->minCount),
-                                   QString::number(i->maxCount)));
-    }
-    ui->textAllowedElement->setText(displayedRanges);
 }
 
 void FormMassToFormula::setInputWidgetEnabled(bool enabled)
@@ -144,7 +132,10 @@ void FormMassToFormula::setInputWidgetEnabled(bool enabled)
 void FormMassToFormula::onCompositionSelectorFinished()
 {
     compositionList->hide();
-    showAllowedElementRanges();
+    ui->comboAllowedElement->setCurrentComposition(
+                                    compositionList->getElementRanges(),
+                                    compositionList->getRemark(),
+                                    true);
 }
 
 void FormMassToFormula::onMassModificationChanged()
@@ -299,9 +290,9 @@ void FormMassToFormula::on_buttonAllowedElement_clicked()
     else
     {
         compositionList->move(mapToGlobal(
-                              {ui->textAllowedElement->x(),
-                               ui->textAllowedElement->y() +
-                               ui->textAllowedElement->height()}));
+                              {ui->comboAllowedElement->x(),
+                               ui->comboAllowedElement->y() +
+                               ui->comboAllowedElement->height()}));
         resizeEvent(nullptr);
         compositionList->show();
     }
@@ -370,4 +361,14 @@ void FormMassToFormula::on_buttonShowMassModification_clicked()
 {
     ui->frameMassModification->setVisible(
                                     !ui->frameMassModification->isVisible());
+}
+
+void FormMassToFormula::on_comboAllowedElement_activated(int index)
+{
+    if (index < 0)
+        return;
+
+    compositionList->setElementRanges(
+                            ui->comboAllowedElement->composition(index));
+    compositionList->setRemark(ui->comboAllowedElement->remark(index));
 }

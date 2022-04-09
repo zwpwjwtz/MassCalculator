@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MassCalculator
 TEMPLATE = app
 
-VERSION = 2.0.1
+VERSION = 2.0.2
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -60,7 +60,8 @@ SOURCES += \
     calculator/atomvalence.cpp \
     calculator/valence.cpp \
     widget/dialogformulalistfilter.cpp \
-    widget/formulalistproxymodel.cpp
+    widget/formulalistproxymodel.cpp \
+    widget/compositiontemplatelist.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -100,7 +101,8 @@ HEADERS += \
     calculator/atomvalence.h \
     calculator/valence.h \
     widget/dialogformulalistfilter.h \
-    widget/formulalistproxymodel.h
+    widget/formulalistproxymodel.h \
+    widget/compositiontemplatelist.h
 
 FORMS += \
         mainwindow.ui \
@@ -112,7 +114,8 @@ FORMS += \
     component/formabout.ui \
     widget/frameisotopicpatternlist.ui \
     component/framesettings.ui \
-    widget/dialogformulalistfilter.ui
+    widget/dialogformulalistfilter.ui \
+    widget/compositiontemplatelist.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

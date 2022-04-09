@@ -8,6 +8,12 @@ public:
     int minCount;
     int maxCount;
     ElementRange() : atomNumber(0), minCount(0), maxCount(0) {}
+    bool operator ==(const ElementRange& arg) const
+    {
+        return atomNumber == arg.atomNumber &&
+               minCount == arg.minCount &&
+               maxCount == arg.maxCount;
+    }
 };
 
 #endif // ELEMENTRANGE_H

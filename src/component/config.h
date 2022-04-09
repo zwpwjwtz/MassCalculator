@@ -5,6 +5,7 @@
 
 
 class CompositionSelector;
+class CompositionTemplateList;
 class FrameFormulaModification;
 
 struct MassTolerance
@@ -23,17 +24,20 @@ public:
         IsotopicPatternMass
     };
 
-    void loadFormulaModification(FrameFormulaModification& widget);
+    void loadFormulaModification(FrameFormulaModification& widget) const;
     void saveFormulaModification(const FrameFormulaModification& widget);
 
-    void loadMassModification(FrameFormulaModification& widget);
+    void loadMassModification(FrameFormulaModification& widget) const;
     void saveMassModification(const FrameFormulaModification& widget);
 
     MassTolerance massTolerance() const;
     void setMassTolerance(const MassTolerance& tolerance);
 
-    void loadCompositionSelector(CompositionSelector& widget);
+    void loadCompositionSelector(CompositionSelector& widget) const;
     void saveCompositionSelector(const CompositionSelector& widget);
+
+    void loadCompositionTemplates(CompositionTemplateList& widget) const;
+    void saveCompositionTemplates(const CompositionTemplateList& widget);
 
     int numberPrecision(PrecisionType type) const;
     void setNumberPrecision(PrecisionType type, int digits);

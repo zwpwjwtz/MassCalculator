@@ -22,9 +22,14 @@ public:
     void addElement(int atomNumber,
                     int minCount, int maxCount,
                     bool enable = true);
-    void clear();
-    QList<ElementRange> getElementRanges() const;
     void removeElement(int atomNumber);
+    void clear();
+
+    QList<ElementRange> getElementRanges() const;
+    void setElementRanges(const QList<ElementRange>& rangeList);
+
+    QString getRemark() const;
+    void setRemark(const QString& remark);
 
 signals:
     void finished();

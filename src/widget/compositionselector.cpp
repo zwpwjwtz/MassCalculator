@@ -62,6 +62,16 @@ void CompositionSelector::addElement(int atomNumber,
     modelElement.appendRow(newRow);
 }
 
+void CompositionSelector::removeElement(int atomNumber)
+{
+    for (int i=modelElement.rowCount() - 1; i>=0; i--)
+    {
+        if (atomNumber ==
+            modelElement.item(i, 0)->data(MC_COMPSELECTOR_ROLE_ATOMNUM).toInt())
+            modelElement.removeRow(i);
+    }
+}
+
 void CompositionSelector::clear()
 {
     modelElement.setRowCount(0);
@@ -84,14 +94,21 @@ QList<ElementRange> CompositionSelector::getElementRanges() const
     return elementRangeList;
 }
 
-void CompositionSelector::removeElement(int atomNumber)
+void CompositionSelector::setElementRanges(const QList<ElementRange>& rangeList)
 {
-    for (int i=modelElement.rowCount() - 1; i>=0; i--)
-    {
-        if (atomNumber ==
-            modelElement.item(i, 0)->data(MC_COMPSELECTOR_ROLE_ATOMNUM).toInt())
-            modelElement.removeRow(i);
-    }
+    clear();
+    for (auto range=rangeList.cbegin(); range!=rangeList.cend(); range++)
+        addElement(range->atomNumber, range->minCount, range->maxCount);
+}
+
+QString CompositionSelector::getRemark() const
+{
+    return ui->textRemark->text();
+}
+
+void CompositionSelector::setRemark(const QString& remark)
+{
+    ui->textRemark->setText(remark);
 }
 
 void CompositionSelector::on_buttonAdd_clicked()

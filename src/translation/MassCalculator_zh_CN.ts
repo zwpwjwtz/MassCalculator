@@ -19,7 +19,12 @@
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../widget/compositionselector.ui" line="70"/>
+        <location filename="../widget/compositionselector.ui" line="57"/>
+        <source>Remarks...</source>
+        <translation>备注...</translation>
+    </message>
+    <message>
+        <location filename="../widget/compositionselector.ui" line="64"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
@@ -55,6 +60,19 @@
         <location filename="../widget/compositionselectordelegate.cpp" line="55"/>
         <source>The name that you input does not represent any element. Please check and try again.</source>
         <translation>您输入的字符无法匹配任何元素。请检查后重试。</translation>
+    </message>
+</context>
+<context>
+    <name>CompositionTemplateList</name>
+    <message>
+        <location filename="../widget/compositiontemplatelist.cpp" line="46"/>
+        <source>Copy</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <location filename="../widget/compositiontemplatelist.cpp" line="49"/>
+        <source>Delete</source>
+        <translation>删除</translation>
     </message>
 </context>
 <context>
@@ -213,159 +231,159 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
         <translation>包含元素：</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="153"/>
+        <location filename="../component/formmasstoformula.ui" line="156"/>
         <source>Select elements that are possible in the candidate formula</source>
         <translation>选择候选化学式中可以包含的元素</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="167"/>
+        <location filename="../component/formmasstoformula.ui" line="170"/>
         <source>Set modification</source>
         <translation>选择修饰方式</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="186"/>
+        <location filename="../component/formmasstoformula.ui" line="189"/>
         <source>Tolerance</source>
         <translation>允许误差</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="194"/>
+        <location filename="../component/formmasstoformula.ui" line="197"/>
         <source>Lower bound:</source>
         <translation>下限：</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="201"/>
+        <location filename="../component/formmasstoformula.ui" line="204"/>
         <source>The lower (left) limit of the allowed mass difference between input mass and mass of candidate formulae</source>
         <translation>给定质量数与候选分子式的质量之差的下限（最小允许偏差）</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="211"/>
+        <location filename="../component/formmasstoformula.ui" line="214"/>
         <source>Upper bound:</source>
         <translation>上限：</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="218"/>
+        <location filename="../component/formmasstoformula.ui" line="221"/>
         <source>The upper (right) limit of the allowed mass difference between input mass and mass of candidate formulae</source>
         <translation>给定质量数与候选分子式的质量之差的上限（最大允许偏差）</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="232"/>
+        <location filename="../component/formmasstoformula.ui" line="235"/>
         <source>Absol&amp;ute(Da)</source>
         <translation>绝对偏差（Da）</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="242"/>
+        <location filename="../component/formmasstoformula.ui" line="245"/>
         <source>&amp;Relative(ppm)</source>
         <translation>相对偏差（ppm）</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.ui" line="388"/>
+        <location filename="../component/formmasstoformula.ui" line="391"/>
         <source>Open the &lt;a href=\&quot;#\&quot;&gt;result&lt;/a&gt;&amp;nbsp;&amp;nbsp;</source>
         <translation>打开&lt;a href=&quot;#&quot;&gt;结果文件&lt;/a&gt;&amp;nbsp;&amp;nbsp;</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="174"/>
+        <location filename="../component/formmasstoformula.cpp" line="165"/>
         <source>No result found.</source>
         <translation>找不到匹配的化学式。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="179"/>
+        <location filename="../component/formmasstoformula.cpp" line="170"/>
         <source>Loading %1 results, please wait...</source>
         <translation>正在载入%1个结果，请稍后……</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="184"/>
+        <location filename="../component/formmasstoformula.cpp" line="175"/>
         <source>%1 result(s) found.</source>
         <translation>找到%1个结果。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="195"/>
+        <location filename="../component/formmasstoformula.cpp" line="186"/>
         <source>Calculation finished</source>
         <translation>计算已完成</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="196"/>
+        <location filename="../component/formmasstoformula.cpp" line="187"/>
         <source>Finished importing mass list from file and calculating formula. 
 %1 mass were processed in total.</source>
         <translation>数据导入和计算已完成，共计算了%1个质量数。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="200"/>
+        <location filename="../component/formmasstoformula.cpp" line="191"/>
         <source>Calculation finished.</source>
         <translation>计算已完成。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="205"/>
+        <location filename="../component/formmasstoformula.cpp" line="196"/>
         <source>Calculation failed</source>
         <translation>计算失败</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="206"/>
+        <location filename="../component/formmasstoformula.cpp" line="197"/>
         <source>Something went wrong during the calculation.
 Please check your input file and try again.</source>
         <translation>计算时出现未知错误。请检查您的输入文件，然后重试。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="208"/>
+        <location filename="../component/formmasstoformula.cpp" line="199"/>
         <source>Calculation failed.</source>
         <translation>计算失败。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="233"/>
+        <location filename="../component/formmasstoformula.cpp" line="224"/>
         <source>Ongoing calculation</source>
         <translation>计算进行中</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="234"/>
+        <location filename="../component/formmasstoformula.cpp" line="225"/>
         <source>A calculation task is still being processed.
 Please wait it to be finished before launch a new one.</source>
         <translation>当前已有计算任务在运行。
 请等待它结束后再执行新的计算任务。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="244"/>
+        <location filename="../component/formmasstoformula.cpp" line="235"/>
         <source>Non-positive mass provided</source>
         <translation>质量数不能为非负数</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="245"/>
+        <location filename="../component/formmasstoformula.cpp" line="236"/>
         <source>The mass should be greater than 0</source>
         <translation>质量数应当大于0</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="258"/>
+        <location filename="../component/formmasstoformula.cpp" line="249"/>
         <source>Non-positive mass requested</source>
         <translation>质量数不能为非负数</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="259"/>
+        <location filename="../component/formmasstoformula.cpp" line="250"/>
         <source>The input mass minus the mass of modification (%1) should be greater than 0</source>
         <translation>您输入的质量数减去修饰质量数（%1）后应当大于0</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="278"/>
-        <location filename="../component/formmasstoformula.cpp" line="340"/>
+        <location filename="../component/formmasstoformula.cpp" line="269"/>
+        <location filename="../component/formmasstoformula.cpp" line="331"/>
         <source>No element specified</source>
         <translation>尚未指定元素</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="279"/>
-        <location filename="../component/formmasstoformula.cpp" line="341"/>
+        <location filename="../component/formmasstoformula.cpp" line="270"/>
+        <location filename="../component/formmasstoformula.cpp" line="332"/>
         <source>Please select at least one element before calculating the possible formula.</source>
         <translation>在计算候选分子式之前，请指定至少一个元素。</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="284"/>
-        <location filename="../component/formmasstoformula.cpp" line="346"/>
+        <location filename="../component/formmasstoformula.cpp" line="275"/>
+        <location filename="../component/formmasstoformula.cpp" line="337"/>
         <source>Calculating formulae...</source>
         <translation>正在搜索分子式……</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="319"/>
+        <location filename="../component/formmasstoformula.cpp" line="310"/>
         <source>Select a source file</source>
         <translation>请选择源文件</translation>
     </message>
     <message>
-        <location filename="../component/formmasstoformula.cpp" line="330"/>
+        <location filename="../component/formmasstoformula.cpp" line="321"/>
         <source>Select a target file</source>
         <translation>请选择目标文件</translation>
     </message>

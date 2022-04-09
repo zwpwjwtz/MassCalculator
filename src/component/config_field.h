@@ -5,6 +5,8 @@
 #define MC_CONFIG_FORMULA_MODIFICATION  "formula-modification"
 
 #define MC_CONFIG_MASS_ELEMENTS         "mass-elements"
+#define MC_CONFIG_MASS_ELEMENTS_LIST    "mass-elements-list"
+#define MC_CONFIG_MASS_ELEMENTS_REMARKS "mass-elements-remarks"
 #define MC_CONFIG_MASS_CHARGE           "mass-charge"
 #define MC_CONFIG_MASS_MODIFICATION     "mass-modification"
 #define MC_CONFIG_MASS_TOL_MIN          "mass-tolerance-min"
